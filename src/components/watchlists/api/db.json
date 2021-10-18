@@ -1,0 +1,26 @@
+{
+  "watchlists": [
+    {
+      "title": "Tech Watchlist",
+      "description": "tech holdings",
+      "stocks": [
+        {
+          "ticker": "NEW",
+          "boughtPrice": 98.22,
+          "quantity": 200
+        },
+        {
+          "ticker": "INTC",
+          "boughtPrice": 35.55,
+          "quantity": 500
+        },
+        {
+          "ticker": "SMH",
+          "boughtPrice": 128.59,
+          "quantity": 100
+        }
+      ],
+      "id": 2
+    }
+  ]
+}
