@@ -1,26 +1,46 @@
 {
+  "users": [
+    {
+      "id": 4441,
+      "name": "user1",
+      "watchlists": [
+        {
+          "title": "le gamestop meme",
+          "description": "hedgies XDXD",
+          "stocks": ["GME", "AMC", "443", "5"],
+          "id": 3
+        },
+        {
+          "title": "test1",
+          "stocks": [],
+          "id": 4
+        }
+      ]
+    },
+    {
+      "id": 1987,
+      "watchlists": []
+    },
+    {
+      "id": 8741,
+      "watchlists": []
+    },
+    {
+      "id": 4714,
+      "watchlists": []
+    }
+  ],
   "watchlists": [
     {
-      "title": "Tech Watchlist",
-      "description": "tech holdings",
-      "stocks": [
-        {
-          "ticker": "NEW",
-          "boughtPrice": 98.22,
-          "quantity": 200
-        },
-        {
-          "ticker": "INTC",
-          "boughtPrice": 35.55,
-          "quantity": 500
-        },
-        {
-          "ticker": "SMH",
-          "boughtPrice": 128.59,
-          "quantity": 100
-        }
-      ],
-      "id": 2
+      "title": "le gamestop meme",
+      "description": "hedgies XDXD",
+      "stocks": ["GME", "AMC", "443", "5"],
+      "id": 3
+    },
+    {
+      "title": "test1",
+      "stocks": [],
+      "id": 4
     }
   ]
 }

@@ -1,29 +1,33 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchWatchlists, deleteWatchlist } from "../../actions/";
+import _ from "lodash";
 
-import NewWatchlist from "./NewWatchlist";
+import {
+  fetchWatchlist,
+  fetchWatchlists,
+  deleteWatchlist,
+  addStockToWatchlist,
+} from "../../actions/";
+import AddStockToWatchlist from "../stocks/AddStockToWatchlist";
 
 class WatchlistShow extends React.Component {
+  state = {
+    toggle: false,
+    openLists: [],
+  };
+
   componentDidMount() {
     this.props.fetchWatchlists();
   }
 
-  componentDidUpdate(prevProps) {
-    console.log(prevProps, this.props);
-  }
+  toggleStockInput(id) {
+    if (this.state.openLists.includes(id)) {
+      return;
+    }
 
-  renderStocks(stocks) {
-    stocks = Object.values(stocks);
-    return stocks.map((stock, index) => {
-      return (
-        <tr key={index}>
-          <td>{stock.ticker}</td>
-          <td>{stock.boughtPrice}</td>
-          <td>{stock.quantity}</td>
-        </tr>
-      );
+    this.setState({
+      openLists: [...this.state.openLists, id],
     });
   }
 
@@ -31,18 +35,39 @@ class WatchlistShow extends React.Component {
     this.props.deleteWatchlist(id);
   }
 
+  onSubmit = (formValues, listId, index) => {
+    const ticker = formValues.ticker.toUpperCase();
+    this.props.addStockToWatchlist(ticker, listId, this.props.watchlists);
+  };
+
+  renderStocks(stocks) {
+    return stocks.map((stock, index) => {
+      return (
+        <tr key={index}>
+          <td>{stock}</td>
+        </tr>
+      );
+    });
+  }
+
   renderList() {
-    const watchlists = Object.values(this.props.watchlists);
-    return watchlists.map((list, index) => {
+    return this.props.watchlists.map((list, index) => {
       return (
         <div key={list.id} style={{ marginBottom: "20px" }}>
           <div className="flex">
-            <h3>{list.title}</h3>
+            <h2>{list.title}</h2>
+            {list.description && <h4>{list.description}</h4>}
             <button
               onClick={() => this.delete(list.id)}
               className="ui button red"
             >
               X
+            </button>
+            <button
+              onClick={() => this.toggleStockInput(list.id)}
+              className="ui button green"
+            >
+              Add
             </button>
           </div>
 
@@ -54,17 +79,27 @@ class WatchlistShow extends React.Component {
                 <td>SHARES</td>
               </tr>
             </thead>
-            <tbody>{list.stocks && this.renderStocks(list.stocks)}</tbody>
+            <tbody>
+              {list.stocks && this.renderStocks(list.stocks)}
+              {this.state.openLists.includes(list.id) && (
+                <AddStockToWatchlist
+                  listId={list.id}
+                  onSubmit={this.onSubmit}
+                  index={index}
+                />
+              )}
+            </tbody>
           </table>
         </div>
       );
     });
   }
+
   render() {
     return (
       <div>
         <h2>Watchlists</h2>
-        {this.renderList()}
+        {this.renderList(this.props.watchlists)}
 
         <Link to="/watchlist/create" className="ui button green">
           New watchlist
@@ -74,12 +109,16 @@ class WatchlistShow extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
+  console.log(state);
   return {
-    watchlists: state.watchlists,
+    watchlists: Object.values(state.watchlists),
   };
 };
 
-export default connect(mapStateToProps, { fetchWatchlists, deleteWatchlist })(
-  WatchlistShow
-);
+export default connect(mapStateToProps, {
+  deleteWatchlist,
+  fetchWatchlist,
+  fetchWatchlists,
+  addStockToWatchlist,
+})(WatchlistShow);

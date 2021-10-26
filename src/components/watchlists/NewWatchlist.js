@@ -1,18 +1,20 @@
 import React from "react";
+import WatchlistForm from "./WatchlistForm";
 import { createWatchlist } from "../../actions";
 import { connect } from "react-redux";
+
 import { Link } from "react-router-dom";
 
 class NewWatchlist extends React.Component {
-  onClick = (e) => {
-    this.props.createWatchlist();
+  onSubmit = (formValues) => {
+    this.props.createWatchlist(formValues);
   };
 
   render() {
     return (
-      <button className="ui button green" onClick={this.onClick}>
-        Submit
-      </button>
+      <div>
+        <WatchlistForm onClick={this.onSubmit} />
+      </div>
     );
   }
 }
