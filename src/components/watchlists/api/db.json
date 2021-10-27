@@ -7,40 +7,20 @@
         {
           "title": "le gamestop meme",
           "description": "hedgies XDXD",
-          "stocks": ["GME", "AMC", "443", "5"],
-          "id": 3
+          "stocks": [
+            "GME",
+            "AMC",
+            "443",
+            "5"
+          ]
         },
         {
-          "title": "test1",
-          "stocks": [],
-          "id": 4
+          "title": "test4",
+          "stocks": [
+            "TEST3"
+          ]
         }
       ]
-    },
-    {
-      "id": 1987,
-      "watchlists": []
-    },
-    {
-      "id": 8741,
-      "watchlists": []
-    },
-    {
-      "id": 4714,
-      "watchlists": []
-    }
-  ],
-  "watchlists": [
-    {
-      "title": "le gamestop meme",
-      "description": "hedgies XDXD",
-      "stocks": ["GME", "AMC", "443", "5"],
-      "id": 3
-    },
-    {
-      "title": "test1",
-      "stocks": [],
-      "id": 4
     }
   ]
 }

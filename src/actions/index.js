@@ -1,4 +1,4 @@
-import watchlists from "../apis/watchlists";
+import users from "../apis/users";
 import _ from "lodash";
 import history from "../history";
 import { actionTypes } from "redux-form";
@@ -17,8 +17,8 @@ export const signOut = () => {
 };
 
 export const fetchUser = (userId) => async (dispatch) => {
-  return await watchlists
-    .get(`./users/${userId}`)
+  return await users
+    .get(`/${userId}`)
     .then((response) => {
       dispatch({
         type: "FETCH_USER",
@@ -26,7 +26,7 @@ export const fetchUser = (userId) => async (dispatch) => {
       });
     })
     .catch(async (error) => {
-      const response = await watchlists.post(`/users`, {
+      const response = await users.post("", {
         id: userId,
         watchlists: [],
       });
@@ -41,7 +41,7 @@ export const fetchUser = (userId) => async (dispatch) => {
 export const createUser = (userId) => async (dispatch) => {};
 
 export const fetchWatchlist = (id) => async (dispatch) => {
-  const response = await watchlists.get(`./watchlists/${id}`);
+  const response = await users.get(`./users/${id}`);
 
   dispatch({
     type: "FETCH_WATCHLIST",
@@ -50,7 +50,7 @@ export const fetchWatchlist = (id) => async (dispatch) => {
 };
 
 export const fetchWatchlists = () => async (dispatch) => {
-  const response = await watchlists.get("./watchlists");
+  const response = await users.get("./users");
 
   dispatch({
     type: "FETCH_WATCHLISTS",
@@ -58,41 +58,71 @@ export const fetchWatchlists = () => async (dispatch) => {
   });
 };
 
-export const deleteWatchlist = (id) => async (dispatch) => {
-  await watchlists.delete(`/watchlists/${id}`);
+// export const deleteWatchlist = (id) => async (dispatch) => {
+//   await users.delete(`/${id}`);
 
+//   dispatch({
+//     type: "DELETE_WATCHLIST",
+//     payload: id,
+//   });
+// };
+
+export const fetchState = () => async (dispatch) => {
   dispatch({
-    type: "DELETE_WATCHLIST",
-    payload: id,
+    type: "FETCH_STATE",
   });
 };
 
-export const createWatchlist = (formValues) => async (dispatch) => {
-  const response = await watchlists.post("/watchlists", {
-    ...formValues,
-    stocks: [],
+export const deleteWatchlist = (id, index) => async (dispatch) => {
+  const patched = await users.get(`/${id}`).then((response) => {
+    const res = response;
+    res.data.watchlists.splice(index, 1);
+    return users.patch(`/${id}`, {
+      ...res.data,
+    });
   });
 
   dispatch({
+    type: "DELETE_WATCHLIST",
+    payload: patched.data,
+  });
+};
+
+export const createWatchlist = (formValues, id) => async (dispatch) => {
+  const newWatchlist = {
+    ...formValues,
+    stocks: [],
+  };
+
+  const patched = await users.get(`/${id}`).then((response) =>
+    users.patch(`/${id}`, {
+      ...response.data,
+      ...response.data.watchlists.push(newWatchlist),
+    })
+  );
+
+  dispatch({
     type: "CREATE_WATCHLIST",
-    payload: response.data,
+    payload: patched.data,
   });
   history.push("/");
 };
 
 // Stock action creators
 
-export const addStockToWatchlist = (ticker, listId) => async (dispatch) => {
-  const path = `/watchlists/${listId}`;
-  const posted = await watchlists.get(path).then((response) =>
-    watchlists.patch(path, {
-      ...response.data,
-      ...response.data.stocks.push(ticker),
-    })
-  );
+export const addStockToWatchlist = (ticker, index, id) => async (dispatch) => {
+  const path = `/${id}`;
+  const patched = await users.get(path).then((response) => {
+    const res = response;
+    res.data.watchlists[index].stocks.push(ticker);
+    console.log(res);
+    return users.patch(path, {
+      ...res.data,
+    });
+  });
 
   dispatch({
     type: "ADD_STOCK_TO_WATCHLIST",
-    payload: posted.data,
+    payload: patched.data,
   });
 };

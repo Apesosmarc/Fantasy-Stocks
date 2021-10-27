@@ -3,19 +3,21 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchUser, createUser } from "../../actions";
 
+import WatchlistShow from "../watchlists/WatchlistShow";
+
 class FetchUser extends Component {
-  componentDidMount() {
-    this.props.fetchUser(this.props.id);
-  }
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <h2>Watchlists</h2>
+        <WatchlistShow id={this.props.id} />
+      </div>
+    );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    watchlists: state.user.watchlists,
-  };
+const mapStateToProps = () => {
+  return {};
 };
 
 export default connect(mapStateToProps, {

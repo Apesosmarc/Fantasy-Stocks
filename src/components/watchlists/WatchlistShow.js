@@ -2,42 +2,43 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import _ from "lodash";
+import AddStockToWatchlist from "./AddStockToWatchlist";
 
 import {
   fetchWatchlist,
   fetchWatchlists,
   deleteWatchlist,
   addStockToWatchlist,
+  fetchUser,
 } from "../../actions/";
-import AddStockToWatchlist from "../stocks/AddStockToWatchlist";
 
 class WatchlistShow extends React.Component {
+  componentDidMount() {
+    this.props.fetchUser(this.props.id);
+  }
   state = {
     toggle: false,
     openLists: [],
   };
 
-  componentDidMount() {
-    this.props.fetchWatchlists();
-  }
-
-  toggleStockInput(id) {
-    if (this.state.openLists.includes(id)) {
+  toggleStockInput(index) {
+    if (this.state.openLists.includes(index)) {
       return;
     }
 
     this.setState({
-      openLists: [...this.state.openLists, id],
+      openLists: [...this.state.openLists, index],
     });
   }
 
-  delete(id) {
-    this.props.deleteWatchlist(id);
+  delete(index) {
+    this.props.deleteWatchlist(this.props.id, index);
   }
 
-  onSubmit = (formValues, listId, index) => {
+  onSubmit = (formValues, index) => {
     const ticker = formValues.ticker.toUpperCase();
-    this.props.addStockToWatchlist(ticker, listId, this.props.watchlists);
+
+    this.props.addStockToWatchlist(ticker, index, this.props.id);
   };
 
   renderStocks(stocks) {
@@ -53,18 +54,18 @@ class WatchlistShow extends React.Component {
   renderList() {
     return this.props.watchlists.map((list, index) => {
       return (
-        <div key={list.id} style={{ marginBottom: "20px" }}>
+        <div key={index} style={{ marginBottom: "20px" }}>
           <div className="flex">
             <h2>{list.title}</h2>
             {list.description && <h4>{list.description}</h4>}
             <button
-              onClick={() => this.delete(list.id)}
+              onClick={() => this.delete(index)}
               className="ui button red"
             >
               X
             </button>
             <button
-              onClick={() => this.toggleStockInput(list.id)}
+              onClick={() => this.toggleStockInput(index)}
               className="ui button green"
             >
               Add
@@ -81,15 +82,19 @@ class WatchlistShow extends React.Component {
             </thead>
             <tbody>
               {list.stocks && this.renderStocks(list.stocks)}
-              {this.state.openLists.includes(list.id) && (
+              {this.state.openLists.includes(index) && (
                 <AddStockToWatchlist
-                  listId={list.id}
+                  listId={index}
                   onSubmit={this.onSubmit}
                   index={index}
+                  form={"watchlist" + index}
                 />
               )}
             </tbody>
           </table>
+          <Link to="/watchlist/create" className="ui button green">
+            New watchlist
+          </Link>
         </div>
       );
     });
@@ -97,28 +102,21 @@ class WatchlistShow extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Watchlists</h2>
-        {this.renderList(this.props.watchlists)}
-
-        <Link to="/watchlist/create" className="ui button green">
-          New watchlist
-        </Link>
-      </div>
+      <React.Fragment>
+        {this.props.watchlists && this.renderList(this.props.watchlists)};
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
-    watchlists: Object.values(state.watchlists),
+    watchlists: state.user.watchlists,
   };
 };
 
 export default connect(mapStateToProps, {
+  fetchUser,
   deleteWatchlist,
-  fetchWatchlist,
-  fetchWatchlists,
   addStockToWatchlist,
 })(WatchlistShow);

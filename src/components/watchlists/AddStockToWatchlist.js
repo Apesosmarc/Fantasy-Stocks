@@ -13,7 +13,7 @@ class AddStockToWatchlist extends React.Component {
   };
 
   onClick = (formValues) => {
-    this.props.onSubmit(formValues, this.props.listId, this.props.index);
+    this.props.onSubmit(formValues, this.props.index);
   };
 
   render() {

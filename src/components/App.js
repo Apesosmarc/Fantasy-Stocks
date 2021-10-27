@@ -74,10 +74,15 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          {this.renderUser()}
-          <div>{this.renderAuthButton()}</div>
-        </div>
+        <Router history={history}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Switch>
+              <Route render={() => this.renderUser()} path="/" exact />
+              <Route path="/watchlist/create" exact component={NewWatchlist} />
+            </Switch>
+            <div>{this.renderAuthButton()}</div>
+          </div>
+        </Router>
       </div>
     );
   }
