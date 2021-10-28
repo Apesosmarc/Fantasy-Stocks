@@ -7,20 +7,11 @@
         {
           "title": "le gamestop meme",
           "description": "hedgies XDXD",
-          "stocks": [
-            "GME",
-            "AMC",
-            "443",
-            "5",
-            "FAS",
-            "FAS"
-          ]
+          "stocks": ["GME", "AMC", "443", "5", "FAS", "FAS"]
         },
         {
           "title": "test4",
-          "stocks": [
-            "TEST3"
-          ]
+          "stocks": ["TEST3"]
         }
       ]
     }

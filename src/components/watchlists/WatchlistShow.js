@@ -106,7 +106,7 @@ class WatchlistShow extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.props.watchlists && this.renderList(this.props.watchlists)};
+        {this.props.watchlists && this.renderList(this.props.watchlists)}
       </React.Fragment>
     );
   }

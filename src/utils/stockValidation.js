@@ -18,11 +18,11 @@ export const serverValidation = async (ticker) => {
     });
 };
 
-export const checkIfValidInput = (value) => {
+export const checkIfValidTicker = (value) => {
   if (/[0-9]|\W/.test(value)) {
-    return true;
+    return value.substring(0, value.length - 1);
   }
   if (value.length > 5) {
-    return true;
+    return value.substring(0, value.length - 1);
   }
 };
