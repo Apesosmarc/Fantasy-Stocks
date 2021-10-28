@@ -32,6 +32,9 @@ class WatchlistShow extends React.Component {
   }
 
   delete(index) {
+    // this.setState({
+    //   openLists: openLists.filter(list => return)
+    // })
     this.props.deleteWatchlist(this.props.id, index);
   }
 

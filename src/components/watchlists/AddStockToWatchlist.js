@@ -1,13 +1,17 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { checkIfValidInput, serverValidation } from "../../utils/validation";
 
 class AddStockToWatchlist extends React.Component {
   renderInput = ({ input, label, meta }) => {
+    if (checkIfValidInput(input.value)) {
+      input.value = "";
+    }
     return (
       <div className="field">
         <label htmlFor={label}>{label}</label>
         <input {...input} autoComplete="off" />
-        {meta.touched && meta.error && <div>{meta.error}</div>}
+        {meta.error && <div>{meta.error}</div>}
       </div>
     );
   };
@@ -22,7 +26,8 @@ class AddStockToWatchlist extends React.Component {
         <td>
           <form
             className="ui form"
-            onSubmit={this.props.handleSubmit(this.onClick)}
+            onSubmit={this.props.handleSubmit(serverValidation)}
+            // onSubmit={this.props.handleSubmit(this.onClick)}
           >
             <Field
               label="Enter ticker"
@@ -42,10 +47,13 @@ const validate = (formValues) => {
   if (!formValues.ticker) {
     errors.ticker = "Please enter a ticker";
   }
+  if (formValues.ticker.length > 5) {
+    errors.ticker = "Ticker is too long";
+  }
   return errors;
 };
 
 export default reduxForm({
-  form: "addStockToWatchlistForm",
   validate,
+  form: "submitValidation",
 })(AddStockToWatchlist);
