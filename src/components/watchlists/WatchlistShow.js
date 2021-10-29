@@ -5,8 +5,7 @@ import _ from "lodash";
 import AddStockToWatchlist from "./AddStockToWatchlist";
 
 import {
-  fetchWatchlist,
-  fetchWatchlists,
+  deleteStock,
   deleteWatchlist,
   addStockToWatchlist,
   fetchUser,
@@ -31,11 +30,19 @@ class WatchlistShow extends React.Component {
     });
   }
 
-  delete(index) {
-    // this.setState({
-    //   openLists: openLists.filter(list => return)
-    // })
+  deleteWatchlist(index) {
     this.props.deleteWatchlist(this.props.id, index);
+
+    // removes deleted array from array of opened lists
+    this.setState({
+      openLists: this.state.openLists.filter(
+        (list, listIndex) => listIndex != index - 1
+      ),
+    });
+  }
+
+  deleteStock(listIndex, stockIndex) {
+    this.props.deleteStock(this.props.id, listIndex, stockIndex);
   }
 
   onSubmit = (formValues, index) => {
@@ -44,11 +51,19 @@ class WatchlistShow extends React.Component {
     this.props.addStockToWatchlist(ticker, index, this.props.id);
   };
 
-  renderStocks(stocks) {
+  renderStocks(stocks, listIndex) {
     return stocks.map((stock, index) => {
       return (
         <tr key={index}>
           <td>{stock}</td>
+          <td>
+            <button
+              className="ui button red"
+              onClick={() => this.deleteStock(listIndex, index)}
+            >
+              X
+            </button>
+          </td>
         </tr>
       );
     });
@@ -62,7 +77,7 @@ class WatchlistShow extends React.Component {
             <h2>{list.title}</h2>
             {list.description && <h4>{list.description}</h4>}
             <button
-              onClick={() => this.delete(index)}
+              onClick={() => this.deleteWatchlist(index)}
               className="ui button red"
             >
               X
@@ -84,7 +99,7 @@ class WatchlistShow extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {list.stocks && this.renderStocks(list.stocks)}
+              {list.stocks && this.renderStocks(list.stocks, index)}
               {this.state.openLists.includes(index) && (
                 <AddStockToWatchlist
                   listId={index}
@@ -121,5 +136,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   fetchUser,
   deleteWatchlist,
+  deleteStock,
   addStockToWatchlist,
 })(WatchlistShow);

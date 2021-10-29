@@ -19,6 +19,11 @@ export default (state = {}, action) => {
         ...state,
         ...action.payload,
       };
+    case "DELETE_STOCK":
+      return {
+        ...state,
+        ...action.payload,
+      };
     case "ADD_STOCK_TO_WATCHLIST":
       return { ...state, ...action.payload };
 

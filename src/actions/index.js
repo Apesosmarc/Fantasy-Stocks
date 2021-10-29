@@ -1,7 +1,7 @@
 import users from "../apis/users";
 import _ from "lodash";
 import history from "../history";
-import { actionTypes } from "redux-form";
+import { actionTypes, reduxForm } from "redux-form";
 
 export const signIn = (userId) => async (dispatch) => {
   userId = userId.slice(-4);
@@ -84,6 +84,21 @@ export const deleteWatchlist = (id, index) => async (dispatch) => {
 
   dispatch({
     type: "DELETE_WATCHLIST",
+    payload: patched.data,
+  });
+};
+
+export const deleteStock = (id, listIndex, stockIndex) => async (dispatch) => {
+  const patched = await users.get(`/${id}`).then((response) => {
+    const res = response;
+    res.data.watchlists[listIndex].stocks.splice(stockIndex, 1);
+    return users.patch(`/${id}`, {
+      ...res.data,
+    });
+  });
+
+  dispatch({
+    type: "DELETE_STOCK",
     payload: patched.data,
   });
 };
