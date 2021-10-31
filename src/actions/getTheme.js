@@ -1,9 +1,27 @@
+const DOMlightMode = () => {
+  document.documentElement.classList.remove("dark");
+
+  window.localStorage.setItem("darkMode", false);
+  document.documentElement.classList.add("light");
+};
+
+const DOMdarkMode = () => {
+  document.documentElement.classList.remove("light");
+  window.localStorage.setItem("darkMode", true);
+  document.documentElement.classList.add("dark");
+};
+
 export const getInitialTheme = () => {
   if (typeof window !== "undefined" && window.localStorage) {
     const storedPrefs = window.localStorage.getItem("darkMode");
     if (storedPrefs) {
-      console.log(storedPrefs === "false");
-      return storedPrefs === "true" ? true : false;
+      if (storedPrefs === "false") {
+        DOMlightMode();
+        return false;
+      }
+      if (storedPrefs === "true") {
+        return true;
+      }
     }
 
     const userMedia = window.matchMedia("(prefers-color-scheme: dark)");
@@ -30,11 +48,7 @@ export const getTheme = () => (dispatch) => {
 };
 
 export const setLightMode = (theme) => (dispatch) => {
-  document.documentElement.classList.remove("dark");
-
-  window.localStorage.setItem("darkMode", false);
-  document.documentElement.classList.add("light");
-
+  DOMlightMode();
   dispatch({
     type: "SET_LIGHT_MODE",
     payload: false,
@@ -42,10 +56,7 @@ export const setLightMode = (theme) => (dispatch) => {
 };
 
 export const setDarkMode = (theme) => (dispatch) => {
-  document.documentElement.classList.remove("light");
-  window.localStorage.setItem("darkMode", true);
-  document.documentElement.classList.add("dark");
-
+  DOMdarkMode();
   dispatch({
     type: "SET_DARK_MODE",
     payload: true,

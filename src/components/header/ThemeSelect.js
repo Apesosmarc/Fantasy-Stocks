@@ -9,6 +9,14 @@ class ThemeSelect extends React.Component {
     this.props.getTheme();
   }
 
+  setTheme = ({ darkMode }) => {
+    if (darkMode) {
+      this.props.setDarkMode();
+    } else {
+      this.props.setLightMode();
+    }
+  };
+
   renderIcons = (darkMode) => {
     if (darkMode) {
       return <button onClick={this.props.setLightMode}>{icons.sunIcon}</button>;
@@ -22,7 +30,6 @@ class ThemeSelect extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return { theme: state.theme };
 };
 
