@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchUser, createUser } from "../../actions";
 
 import WatchlistShow from "../watchlists/WatchlistShow";

@@ -1,13 +1,15 @@
 import React from "react";
-import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { signIn, signOut } from "../actions";
+// ROUTER
+import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
 import history from "../history";
-import NewWatchlist from "./watchlists/NewWatchlist";
-import WatchlistShow from "./watchlists/WatchlistShow";
+// ACTION CREATORS
+import { signIn, signOut } from "../actions";
 import FetchUsers from "./users/FetchUsers";
+// COMPONENTS
+import NewWatchlist from "./watchlists/NewWatchlist";
+
 import Header from "../components/header/Header";
-import FetchUser from "./users/FetchUsers";
 
 class App extends React.Component {
   componentDidMount() {
@@ -76,6 +78,7 @@ class App extends React.Component {
       <div>
         <Router history={history}>
           <div style={{ display: "flex", justifyContent: "center" }}>
+            <Header />
             <Switch>
               <Route render={() => this.renderUser()} path="/" exact />
               <Route path="/watchlist/create" exact component={NewWatchlist} />

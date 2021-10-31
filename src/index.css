@@ -1,0 +1,21 @@
+:root {
+  @apply light;
+}
+
+.dark {
+  --color-bg-primary: hsl(235, 21%, 11%);
+  --color-bg-secondary: hsl(235, 24%, 19%);
+  --color-border-primary: hsl(234, 39%, 85%);
+  --color-border-secondary: hsl(233, 14%, 35%);
+}
+
+.light {
+  --color-bg-primary: hsl(236, 33%, 92%);
+  --color-bg-secondary: hsl(0, 0%, 98%);
+  --color-border-primary: hsl(236, 9%, 61%);
+  --color-border-secondary: hsl(235, 19%, 35%);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

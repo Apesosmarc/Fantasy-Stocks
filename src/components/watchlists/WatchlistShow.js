@@ -121,6 +121,9 @@ class WatchlistShow extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <div>
+          <div className="w-28 bg-primary">fasdfasdf</div>
+        </div>
         {this.props.watchlists && this.renderList(this.props.watchlists)}
       </React.Fragment>
     );

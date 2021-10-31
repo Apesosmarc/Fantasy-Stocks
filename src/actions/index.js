@@ -1,7 +1,7 @@
 import users from "../apis/users";
 import _ from "lodash";
 import history from "../history";
-import { actionTypes, reduxForm } from "redux-form";
+import { getInitialTheme } from "./getTheme";
 
 export const signIn = (userId) => async (dispatch) => {
   userId = userId.slice(-4);
