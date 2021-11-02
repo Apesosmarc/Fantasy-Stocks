@@ -2,14 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import _ from "lodash";
+//Components
 import AddStockToWatchlist from "./AddStockToWatchlist";
-
+import LoadNewsButton from "../news/LoadNewsButton";
+import RenderStock from "../stocks/RenderStock";
+// Action Creators
 import {
   deleteStock,
   deleteWatchlist,
   addStockToWatchlist,
   fetchUser,
 } from "../../actions/";
+import { getStockQuote } from "../../actions/stocks";
 
 class WatchlistShow extends React.Component {
   componentDidMount() {
@@ -30,6 +34,37 @@ class WatchlistShow extends React.Component {
     });
   }
 
+  onSubmit = (ticker, index) => {
+    ticker = ticker.toUpperCase();
+
+    const result = this.props.getStockQuote(ticker);
+
+    console.log(result);
+
+    // this.props.addStockToWatchlist(ticker, index, this.props.id);
+    // serverValidation = (formValues) => {
+    //   const ticker = formValues.ticker;
+
+    //   const response = this.props.addStockToWatchlist(ticker, index, this.props.id);
+  };
+
+  //       return await iex.get(`/stock/${ticker}/quote`).then((res) => {
+  //         const ticker = formValues.ticker.toUpperCase
+  //       }).catch((error) => {
+  //         if (error.response.status === 404) {
+  //           throw new SubmissionError({
+  //             ticker: "Ticker not found",
+  //             _error: "ticker not found",
+  //           });
+  //         }
+  //       });
+  // ;
+  //         const ticker = formValues.ticker.toUpperCase();
+
+  //         this.props.addStockToWatchlist(ticker, index, this.props.id);
+
+  //   }
+
   deleteWatchlist(index) {
     this.props.deleteWatchlist(this.props.id, index);
 
@@ -41,30 +76,15 @@ class WatchlistShow extends React.Component {
     });
   }
 
-  deleteStock(listIndex, stockIndex) {
-    this.props.deleteStock(this.props.id, listIndex, stockIndex);
-  }
-
-  onSubmit = (formValues, index) => {
-    const ticker = formValues.ticker.toUpperCase();
-
-    this.props.addStockToWatchlist(ticker, index, this.props.id);
-  };
-
   renderStocks(stocks, listIndex) {
     return stocks.map((stock, index) => {
       return (
-        <tr key={index}>
-          <td>{stock}</td>
-          <td>
-            <button
-              className="ui button red"
-              onClick={() => this.deleteStock(listIndex, index)}
-            >
-              X
-            </button>
-          </td>
-        </tr>
+        <RenderStock
+          ticker={stock}
+          stockIndex={index}
+          listIndex={listIndex}
+          userId={this.props.id}
+        />
       );
     });
   }
@@ -72,60 +92,72 @@ class WatchlistShow extends React.Component {
   renderList() {
     return this.props.watchlists.map((list, index) => {
       return (
-        <div key={index} style={{ marginBottom: "20px" }}>
-          <div className="flex">
-            <h2>{list.title}</h2>
-            {list.description && <h4>{list.description}</h4>}
-            <button
-              onClick={() => this.deleteWatchlist(index)}
-              className="ui button red"
-            >
-              X
-            </button>
-            <button
-              onClick={() => this.toggleStockInput(index)}
-              className="ui button green"
-            >
-              Add
-            </button>
-          </div>
+        <React.Fragment>
+          <div className="relative flex flex-col justify-center items-center bg-secondary rounded-md mb-4 text-center">
+            <div className=" w-11/12 p-4">
+              <div className="watchlist-header-container">
+                <h1 className="text-3xl font-bold mb-2">{list.title}</h1>
+                {list.description && (
+                  <h2 className="text-lg font-bold">{list.description}</h2>
+                )}
+              </div>
 
-          <table>
-            <thead>
-              <tr>
-                <td>TICKER</td>
-                <td>PRICE</td>
-                <td>SHARES</td>
-              </tr>
-            </thead>
-            <tbody>
-              {list.stocks && this.renderStocks(list.stocks, index)}
-              {this.state.openLists.includes(index) && (
+              <button
+                onClick={() => this.deleteWatchlist(index)}
+                className="utility-button absolute right-4 top-4  py-1 px-2"
+              >
+                X
+              </button>
+            </div>
+
+            <table className="table-auto w-full">
+              <thead>
+                <tr>
+                  <th>Holding</th>
+                  <th>Price</th>
+                  <th>Price Change</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {list.stocks && this.renderStocks(list.stocks, index)}
+              </tbody>
+            </table>
+            <div className="flex flex-col py-6 px-4 w-full justify-center items-center">
+              {this.state.openLists.includes(index) ? (
                 <AddStockToWatchlist
                   listId={index}
-                  onSubmit={this.onSubmit}
+                  onClick={this.onSubmit}
                   index={index}
                   form={"watchlist" + index}
                 />
+              ) : (
+                <button
+                  onClick={() => this.toggleStockInput(index)}
+                  className="utility-button text-2xl py-2 px-4 w-1/4"
+                >
+                  Add Stock
+                </button>
               )}
-            </tbody>
-          </table>
-          <Link to="/watchlist/create" className="ui button green">
-            New watchlist
-          </Link>
-        </div>
+            </div>
+          </div>
+          <LoadNewsButton />
+        </React.Fragment>
       );
     });
   }
 
   render() {
     return (
-      <React.Fragment>
-        <div>
-          <div className="w-28 bg-primary">fasdfasdf</div>
+      <div className="w-full flex justify-center items-center">
+        <div className="mx-auto w-96 lg:w-8/12">
+          {this.props.watchlists && this.renderList(this.props.watchlists)}
+
+          <Link to="/watchlist/create" className="utility-button w-full py-4">
+            New watchlist
+          </Link>
         </div>
-        {this.props.watchlists && this.renderList(this.props.watchlists)}
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -141,4 +173,5 @@ export default connect(mapStateToProps, {
   deleteWatchlist,
   deleteStock,
   addStockToWatchlist,
+  getStockQuote,
 })(WatchlistShow);

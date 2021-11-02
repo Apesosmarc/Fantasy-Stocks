@@ -8,6 +8,7 @@ import { signIn, signOut } from "../actions";
 import FetchUsers from "./users/FetchUsers";
 // COMPONENTS
 import NewWatchlist from "./watchlists/NewWatchlist";
+import BackgroundImage from "./header/BackgroundImage";
 
 import Header from "../components/header/Header";
 
@@ -77,7 +78,9 @@ class App extends React.Component {
     return (
       <div>
         <Router history={history}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <BackgroundImage />
+
+          <div className="container mx-auto md:w-1/2 md:px-10 sm:w-3/4 px-5">
             <Header />
             <Switch>
               <Route render={() => this.renderUser()} path="/" exact />

@@ -1,7 +1,6 @@
 import users from "../apis/users";
 import _ from "lodash";
 import history from "../history";
-import { getInitialTheme } from "./getTheme";
 
 export const signIn = (userId) => async (dispatch) => {
   userId = userId.slice(-4);
@@ -89,6 +88,7 @@ export const deleteWatchlist = (id, index) => async (dispatch) => {
 };
 
 export const deleteStock = (id, listIndex, stockIndex) => async (dispatch) => {
+  console.log(id, listIndex, stockIndex);
   const patched = await users.get(`/${id}`).then((response) => {
     const res = response;
     res.data.watchlists[listIndex].stocks.splice(stockIndex, 1);
@@ -140,4 +140,5 @@ export const addStockToWatchlist = (ticker, index, id) => async (dispatch) => {
     type: "ADD_STOCK_TO_WATCHLIST",
     payload: patched.data,
   });
+  return patched;
 };

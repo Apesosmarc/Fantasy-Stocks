@@ -1,7 +1,7 @@
 export default (state = {}, action) => {
   switch (action.type) {
-    case "FETCH_WATCHLIST":
-      return { ...state, [action.payload.id]: action.payload };
+    case "GET_STOCK_QUOTE":
+      return { ...state, ...action.payload };
 
     default:
       return state;

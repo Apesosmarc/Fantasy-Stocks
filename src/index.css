@@ -2,18 +2,71 @@
   @apply dark;
 }
 
+body {
+  background-color: var(--color-bg-primary);
+}
+
 .dark {
+  /* BG */
   --color-bg-primary: hsl(235, 21%, 11%);
   --color-bg-secondary: hsl(235, 24%, 19%);
+  /* BORDER */
   --color-border-primary: hsl(234, 39%, 85%);
   --color-border-secondary: hsl(233, 14%, 35%);
+  /* TEXT */
+  --color-text-primary: #c8cae1;
+  --color-text-secondary: #5d5e7a;
+  /* BTNs */
+  --color-btn-primary: #3235c2;
 }
 
 .light {
+  /* BG */
   --color-bg-primary: hsl(236, 33%, 92%);
   --color-bg-secondary: hsl(0, 0%, 98%);
+  /* BORDER */
   --color-border-primary: hsl(236, 9%, 61%);
   --color-border-secondary: hsl(235, 19%, 35%);
+  /* TEXT */
+  --color-text-primary: #7e7e86;
+  --color-text-secondary: #9b9ca1;
+  /* BTNs */
+  --color-btn-primary: #77aef1;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  box-sizing: border-box;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 20px;
+}
+tr {
+  border-bottom: 1px solid var(--color-border-primary);
+}
+
+td:last-of-type,
+th:last-of-type {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+}
+
+tr:last-of-type {
+  border: none;
+}
+
+.utility-button {
+  @apply rounded bg-btnPrimary text-white font-bold;
 }
 
 @tailwind base;

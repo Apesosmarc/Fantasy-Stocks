@@ -1,16 +1,25 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { checkIfValidWatchlist } from "../../utils/watchlistValidation";
+import { checkIfValidWatchlist } from "../../validation/watchlistValidation";
 
 class WatchlistForm extends React.Component {
   renderInput = ({ input, label, meta, placeholder }) => {
     input.value = checkIfValidWatchlist(input);
     return (
-      <div className="field">
-        <label placeholder={placeholder} htmlFor={label}>
+      <div className="field flex flex-col">
+        <label
+          className="mb-2 font-bold"
+          placeholder={placeholder}
+          htmlFor={label}
+        >
           {label}
         </label>
-        <input placeholder={placeholder} {...input} autoComplete="off" />
+        <input
+          className="rounded h-10 mb-2 font-black"
+          placeholder={placeholder}
+          {...input}
+          autoComplete="off"
+        />
         {meta.touched && meta.error && <div>{meta.error}</div>}
       </div>
     );
@@ -23,7 +32,7 @@ class WatchlistForm extends React.Component {
     return (
       <form
         onSubmit={this.props.handleSubmit(this.onSubmit)}
-        className="ui form"
+        className="flex flex-col"
       >
         <Field label="Enter Title" name="title" component={this.renderInput} />
         <Field
@@ -32,7 +41,9 @@ class WatchlistForm extends React.Component {
           placeholder="Optional"
           component={this.renderInput}
         />
-        <button className="ui button primary">Submit</button>
+        <button className="bg-btnPrimary text-2xl hover:bg-blue-700 text-white py-2 px-4 font-bold rounded self-center flex-grow-0 mt-4">
+          Submit
+        </button>
       </form>
     );
   }
