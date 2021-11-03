@@ -1,7 +1,4 @@
-alphavantage.co
+newsapi.org
 
-QX3AWXSGB6X8BEOM
-
-url
-
-https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo
+key
+5657f7cd3ae944c487afd9146324277f

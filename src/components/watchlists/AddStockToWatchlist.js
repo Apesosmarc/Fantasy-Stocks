@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { addStockToWatchlist } from "../../actions";
 // Validation
 import { checkIfValidTicker } from "../../validation/stockValidation";
+import iex from "../../apis/iex";
+import { SubmissionError } from "redux-form";
 
 class AddStockToWatchlist extends React.Component {
   renderInput = ({ input, label, meta }) => {
@@ -23,8 +25,22 @@ class AddStockToWatchlist extends React.Component {
     );
   };
 
-  onSubmit = (formValues) => {
-    this.props.onClick(formValues.ticker, this.props.index);
+  serverValidate = async (formValues) => {
+    const ticker = formValues.ticker.toUpperCase();
+
+    const response = await iex
+      .get(`/stock/${ticker}/quote`)
+      .then((res) => {
+        this.props.onClick(ticker, this.props.index);
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          throw new SubmissionError({
+            ticker: "Ticker not found",
+            _error: "ticker not found",
+          });
+        }
+      });
   };
 
   render() {
@@ -32,7 +48,7 @@ class AddStockToWatchlist extends React.Component {
       <div className="mb-10">
         <form
           className="flex justify-center"
-          onSubmit={this.props.handleSubmit(this.onSubmit)}
+          onSubmit={this.props.handleSubmit(this.serverValidate)}
           // onSubmit={this.props.handleSubmit(this.onClick)}
         >
           <Field

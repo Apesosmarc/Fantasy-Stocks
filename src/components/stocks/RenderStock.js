@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 // Action Creators
 import { getStockQuote } from "../../actions/stocks";
 import { deleteStock } from "../../actions/index";
+import { divide } from "lodash";
 
 function RenderStock({
   stockQuote,
@@ -16,16 +17,16 @@ function RenderStock({
   deleteStock,
 }) {
   useEffect(async () => {
-    getStockQuote(ticker);
+    // getStockQuote(ticker, stockIndex);
   }, []);
-
+  return <div></div>;
   return (
     <React.Fragment>
       {stockQuote && (
         <tr className="text-center" key={stockIndex}>
-          <td>{ticker.toUpperCase()}</td>
-          <td>${stockQuote.currentPrice}</td>
-          <td>{stockQuote.changePercent}</td>
+          <td>{ticker}</td>
+          <td>${stockQuote[stockIndex].currentPrice}</td>
+          <td>{stockQuote[stockIndex].changePercent}</td>
 
           <td>
             <button

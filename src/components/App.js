@@ -79,8 +79,8 @@ class App extends React.Component {
       <div>
         <Router history={history}>
           <BackgroundImage />
-
-          <div className="container mx-auto md:w-1/2 md:px-10 sm:w-3/4 px-5">
+          {/* md:w-1/2 md:px-10 sm:w-3/4 px-5 */}
+          <div className="container mx-auto">
             <Header />
             <Switch>
               <Route render={() => this.renderUser()} path="/" exact />

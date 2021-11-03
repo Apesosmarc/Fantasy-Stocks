@@ -130,7 +130,6 @@ export const addStockToWatchlist = (ticker, index, id) => async (dispatch) => {
   const patched = await users.get(path).then((response) => {
     const res = response;
     res.data.watchlists[index].stocks.push(ticker);
-    console.log(res);
     return users.patch(path, {
       ...res.data,
     });

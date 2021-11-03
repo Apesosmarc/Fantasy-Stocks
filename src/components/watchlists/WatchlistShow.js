@@ -35,35 +35,10 @@ class WatchlistShow extends React.Component {
   }
 
   onSubmit = (ticker, index) => {
-    ticker = ticker.toUpperCase();
+    console.log(ticker, index);
 
-    const result = this.props.getStockQuote(ticker);
-
-    console.log(result);
-
-    // this.props.addStockToWatchlist(ticker, index, this.props.id);
-    // serverValidation = (formValues) => {
-    //   const ticker = formValues.ticker;
-
-    //   const response = this.props.addStockToWatchlist(ticker, index, this.props.id);
+    this.props.addStockToWatchlist(ticker, index, this.props.id);
   };
-
-  //       return await iex.get(`/stock/${ticker}/quote`).then((res) => {
-  //         const ticker = formValues.ticker.toUpperCase
-  //       }).catch((error) => {
-  //         if (error.response.status === 404) {
-  //           throw new SubmissionError({
-  //             ticker: "Ticker not found",
-  //             _error: "ticker not found",
-  //           });
-  //         }
-  //       });
-  // ;
-  //         const ticker = formValues.ticker.toUpperCase();
-
-  //         this.props.addStockToWatchlist(ticker, index, this.props.id);
-
-  //   }
 
   deleteWatchlist(index) {
     this.props.deleteWatchlist(this.props.id, index);
@@ -93,8 +68,8 @@ class WatchlistShow extends React.Component {
     return this.props.watchlists.map((list, index) => {
       return (
         <React.Fragment>
-          <div className="relative flex flex-col justify-center items-center bg-secondary rounded-md mb-4 text-center">
-            <div className=" w-11/12 p-4">
+          <div className="relative flex flex-col justify-center items-center bg-secondary rounded-md mb-4 text-center w-96 md:w-1/2 lg:w-1/3 mx-auto">
+            <div className="p-4">
               <div className="watchlist-header-container">
                 <h1 className="text-3xl font-bold mb-2">{list.title}</h1>
                 {list.description && (
@@ -110,7 +85,7 @@ class WatchlistShow extends React.Component {
               </button>
             </div>
 
-            <table className="table-auto w-full">
+            <table className="table-auto ">
               <thead>
                 <tr>
                   <th>Holding</th>
@@ -141,7 +116,7 @@ class WatchlistShow extends React.Component {
               )}
             </div>
           </div>
-          <LoadNewsButton />
+          <LoadNewsButton stocks={["AAPL", "TSLA"]} listIndex={index} />
         </React.Fragment>
       );
     });
@@ -150,7 +125,7 @@ class WatchlistShow extends React.Component {
   render() {
     return (
       <div className="w-full flex justify-center items-center">
-        <div className="mx-auto w-96 lg:w-8/12">
+        <div className="w-full">
           {this.props.watchlists && this.renderList(this.props.watchlists)}
 
           <Link to="/watchlist/create" className="utility-button w-full py-4">

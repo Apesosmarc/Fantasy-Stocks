@@ -7,7 +7,7 @@
         {
           "title": "watchlist title",
           "description": "watchlist desc",
-          "stocks": []
+          "stocks": ["TSLA", "AAPL", "MSFT"]
         },
         {
           "title": "title2",

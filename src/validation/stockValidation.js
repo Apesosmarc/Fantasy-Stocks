@@ -1,17 +1,5 @@
-import { SubmissionError } from "redux-form";
 import iex from "../apis/iex";
 import { addStockToWatchlist } from "../actions/index";
-
-export const serverValidation = async ({ ticker }) => {
-  return await iex.get(`/stock/${ticker}/quote`).catch((error) => {
-    if (error.response.status === 404) {
-      throw new SubmissionError({
-        ticker: "Ticker not found",
-        _error: "ticker not found",
-      });
-    }
-  });
-};
 
 export const checkIfValidTicker = (value) => {
   if (!value) return;
