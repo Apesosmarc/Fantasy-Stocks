@@ -116,7 +116,7 @@ class WatchlistShow extends React.Component {
               )}
             </div>
           </div>
-          <LoadNewsButton stocks={["AAPL", "TSLA"]} listIndex={index} />
+          <LoadNewsButton stocks={list.stocks} listIndex={index} />
         </React.Fragment>
       );
     });

@@ -12,6 +12,9 @@ module.exports = {
         primary: "var(--color-border-primary)",
         secondary: "var(--color-border-secondary)",
       },
+      text: {
+        primary: "var(--color-text-primary",
+      },
     },
   },
   variants: {
