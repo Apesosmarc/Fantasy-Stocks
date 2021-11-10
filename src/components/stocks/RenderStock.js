@@ -16,17 +16,34 @@ function RenderStock({
   userId,
   deleteStock,
 }) {
-  useEffect(async () => {
-    // getStockQuote(ticker, stockIndex);
+  useEffect(() => {
+    getStockQuote(ticker, stockIndex);
   }, []);
-  return <div></div>;
+
+  const redOrGreenText = (price) => {
+    if (parseInt(price) > 0) return "text-green";
+    return "text-red";
+  };
+
   return (
     <React.Fragment>
-      {stockQuote && (
+      {stockQuote[stockIndex] ? (
         <tr className="text-center" key={stockIndex}>
           <td>{ticker}</td>
-          <td>${stockQuote[stockIndex].currentPrice}</td>
-          <td>{stockQuote[stockIndex].changePercent}</td>
+          <td
+            className={
+              redOrGreenText(stockQuote[stockIndex].changePercent) + "-500"
+            }
+          >
+            ${stockQuote[stockIndex].currentPrice}
+          </td>
+          <td
+            className={
+              redOrGreenText(stockQuote[stockIndex].changePercent) + "-500"
+            }
+          >
+            {stockQuote[stockIndex].changePercent}
+          </td>
 
           <td>
             <button
@@ -37,6 +54,8 @@ function RenderStock({
             </button>
           </td>
         </tr>
+      ) : (
+        <div>loading...</div>
       )}
     </React.Fragment>
   );

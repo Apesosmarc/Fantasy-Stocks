@@ -9,6 +9,7 @@ import FetchUsers from "./users/FetchUsers";
 // COMPONENTS
 import NewWatchlist from "./watchlists/NewWatchlist";
 import BackgroundImage from "./header/BackgroundImage";
+import Homescreen from "./Homescreen";
 
 import Header from "../components/header/Header";
 
@@ -71,6 +72,8 @@ class App extends React.Component {
           <FetchUsers id={this.props.userInfo.userId} />
         </div>
       );
+    } else {
+      return <Homescreen />;
     }
   }
 

@@ -1,3 +1,5 @@
+/* Primary? 	#3a7bfd */
+
 :root {
   @apply dark;
 }
@@ -17,7 +19,7 @@ body {
   --color-text-primary: #c8cae1;
   --color-text-secondary: #5d5e7a;
   /* BTNs */
-  --color-btn-primary: #3235c2;
+  --color-btn-primary: #3a7bfd;
 }
 
 .light {
@@ -31,7 +33,7 @@ body {
   --color-text-primary: #7e7e86;
   --color-text-secondary: #9b9ca1;
   /* BTNs */
-  --color-btn-primary: #77aef1;
+  --color-btn-primary: #3a7bfd;
 }
 
 body {
@@ -67,6 +69,30 @@ tr:last-of-type {
 
 .utility-button {
   @apply rounded bg-btnPrimary text-white font-bold;
+}
+
+/* DELETEMODAL STYLE */
+
+.delete-modal {
+  z-index: 1000;
+}
+
+/* LANDING PAGE FEATURES  */
+
+.features-card {
+  @apply flex flex-col items-center justify-center;
+}
+
+.features-copy {
+  @apply md:w-1/2 py-5 my-5 md:my-10;
+}
+
+.features-header {
+  @apply text-lg;
+}
+
+.features-body {
+  @apply leading-6 mt-2;
 }
 
 @tailwind base;

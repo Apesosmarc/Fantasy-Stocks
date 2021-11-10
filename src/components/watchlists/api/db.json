@@ -7,11 +7,22 @@
         {
           "title": "watchlist title",
           "description": "watchlist desc",
-          "stocks": ["TSLA", "AAPL", "MSFT"]
-        },
+          "stocks": [
+            "TSLA",
+            "AMD",
+            "GOOG",
+            "AAPL",
+            "AMC"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3251",
+      "watchlists": [
         {
-          "title": "title2",
-          "description": "desc2",
+          "title": "fdasdfsaf",
+          "description": "asdfasdf",
           "stocks": []
         }
       ]

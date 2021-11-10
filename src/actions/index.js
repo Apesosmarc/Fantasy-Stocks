@@ -88,7 +88,6 @@ export const deleteWatchlist = (id, index) => async (dispatch) => {
 };
 
 export const deleteStock = (id, listIndex, stockIndex) => async (dispatch) => {
-  console.log(id, listIndex, stockIndex);
   const patched = await users.get(`/${id}`).then((response) => {
     const res = response;
     res.data.watchlists[listIndex].stocks.splice(stockIndex, 1);

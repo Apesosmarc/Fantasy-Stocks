@@ -6,6 +6,7 @@ import _ from "lodash";
 import AddStockToWatchlist from "./AddStockToWatchlist";
 import LoadNewsButton from "../news/LoadNewsButton";
 import RenderStock from "../stocks/RenderStock";
+import WatchlistDelete from "./WatchlistDelete";
 // Action Creators
 import {
   deleteStock,
@@ -76,13 +77,11 @@ class WatchlistShow extends React.Component {
                   <h2 className="text-lg font-bold">{list.description}</h2>
                 )}
               </div>
-
-              <button
-                onClick={() => this.deleteWatchlist(index)}
-                className="utility-button absolute right-4 top-4  py-1 px-2"
-              >
-                X
-              </button>
+              <WatchlistDelete
+                listIndex={index}
+                title={list.title}
+                onDelete={() => this.deleteWatchlist(index)}
+              />
             </div>
 
             <table className="table-auto ">
@@ -101,7 +100,6 @@ class WatchlistShow extends React.Component {
             <div className="flex flex-col py-6 px-4 w-full justify-center items-center">
               {this.state.openLists.includes(index) ? (
                 <AddStockToWatchlist
-                  listId={index}
                   onClick={this.onSubmit}
                   index={index}
                   form={"watchlist" + index}
@@ -109,14 +107,16 @@ class WatchlistShow extends React.Component {
               ) : (
                 <button
                   onClick={() => this.toggleStockInput(index)}
-                  className="utility-button text-2xl py-2 px-4 w-1/4"
+                  className="utility-button text-lg py-2 px-4 w-2/4"
                 >
                   Add Stock
                 </button>
               )}
             </div>
           </div>
-          <LoadNewsButton stocks={list.stocks} listIndex={index} />
+          {list.stocks.length > 0 && (
+            <LoadNewsButton stocks={list.stocks} listIndex={index} />
+          )}
         </React.Fragment>
       );
     });

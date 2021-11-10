@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchUser, createUser } from "../../actions";
-
+//Components
 import WatchlistShow from "../watchlists/WatchlistShow";
 
 class FetchUser extends Component {

@@ -13,11 +13,11 @@ class AddStockToWatchlist extends React.Component {
     input.value = checkIfValidTicker(input.value);
 
     return (
-      <div className="flex flex-col h-20 ">
-        <label htmlFor={label}>{label}</label>
+      <div className="flex flex-col h-20 justify-center">
         <input
           {...input}
-          className="w-full h-10 rounded p-2 text-black bg-primary"
+          className="w-full h-10 rounded p-2 text-primary bg-primary"
+          placeholder="Enter symbol"
           autoComplete="off"
         />
         <div> {meta.error && meta.touched && meta.error}</div>
@@ -32,6 +32,7 @@ class AddStockToWatchlist extends React.Component {
       .get(`/stock/${ticker}/quote`)
       .then((res) => {
         this.props.onClick(ticker, this.props.index);
+        formValues.ticker = "";
       })
       .catch((error) => {
         if (error.response.status === 404) {
@@ -47,9 +48,8 @@ class AddStockToWatchlist extends React.Component {
     return (
       <div className="mb-10">
         <form
-          className="flex justify-center"
+          className="flex flex-col"
           onSubmit={this.props.handleSubmit(this.serverValidate)}
-          // onSubmit={this.props.handleSubmit(this.onClick)}
         >
           <Field
             label="Enter ticker"
@@ -57,8 +57,8 @@ class AddStockToWatchlist extends React.Component {
             component={this.renderInput}
           />
 
-          <button className="bg-btnPrimary text-2xl hover:bg-blue-700 text-white py-2 px-4 font-bold rounded self-center flex-grow-0">
-            +
+          <button className=" ml-2 bg-btnPrimary text-lg hover:bg-blue-700 text-white py-2 px-4 font-bold rounded self-center flex-grow-0">
+            Add To List
           </button>
         </form>
       </div>
