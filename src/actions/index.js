@@ -8,11 +8,29 @@ export const signIn = (userId) => async (dispatch) => {
     type: "SIGN_IN",
     payload: userId,
   });
+  history.push(`/${userId}`);
 };
-export const signOut = () => {
-  return {
+
+export const signOut = () => async (dispatch) => {
+  history.push("/");
+  dispatch({
     type: "SIGN_OUT",
-  };
+  });
+};
+
+export const guestSignIn = () => async (dispatch) => {
+  history.push(`/1`);
+  dispatch({
+    type: "GUEST_SIGN_IN",
+    payload: 1,
+  });
+};
+export const guestSignOut = () => async (dispatch) => {
+  console.log("guest signed out");
+  dispatch({
+    type: "GUEST_SIGN_OUT",
+    payload: null,
+  });
 };
 
 export const fetchUser = (userId) => async (dispatch) => {
@@ -56,15 +74,6 @@ export const fetchWatchlists = () => async (dispatch) => {
     payload: response.data,
   });
 };
-
-// export const deleteWatchlist = (id) => async (dispatch) => {
-//   await users.delete(`/${id}`);
-
-//   dispatch({
-//     type: "DELETE_WATCHLIST",
-//     payload: id,
-//   });
-// };
 
 export const fetchState = () => async (dispatch) => {
   dispatch({

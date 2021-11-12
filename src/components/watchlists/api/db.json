@@ -1,19 +1,17 @@
 {
   "users": [
     {
+      "id": 1,
+      "name": "guest",
+      "watchlists": []
+    },
+    {
       "id": 4441,
-      "name": "user1",
       "watchlists": [
         {
           "title": "watchlist title",
           "description": "watchlist desc",
-          "stocks": [
-            "TSLA",
-            "AMD",
-            "GOOG",
-            "AAPL",
-            "AMC"
-          ]
+          "stocks": ["TSLA"]
         }
       ]
     },

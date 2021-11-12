@@ -1,11 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+//Action Creators
+import { guestSignIn } from "../../actions/index";
+//Components
 import Modal from "../../Modal";
+import AuthButton from "./AuthButton";
 
-import { googleIcon } from "../../images/svgs/socialSVG";
-
-export default function SignInForm() {
+function SignInForm({ guestSignIn }) {
   const [selected, setSelected] = useState(false);
 
   const toggleSelected = () => {
@@ -15,12 +18,14 @@ export default function SignInForm() {
   const renderActions = () => {
     return (
       <div className="flex flex-col gap-5">
-        <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+        <button
+          onClick={guestSignIn}
+          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+        >
           Login as Guest
         </button>
-        <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded flex justify-center items-center">
-          <i className="mr-2">{googleIcon}</i> Login
-        </button>
+
+        <AuthButton />
       </div>
     );
   };
@@ -42,3 +47,9 @@ export default function SignInForm() {
     renderModal()
   );
 }
+
+const mapStateToProps = (state) => {
+  return {};
+};
+
+export default connect(null, { guestSignIn })(SignInForm);

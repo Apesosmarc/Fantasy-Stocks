@@ -53,9 +53,9 @@ class LoadNewsButton extends Component {
 
   render() {
     return (
-      <div className="w-full">
+      <div className="w-full lg:pt-5">
         <div
-          className="bg-secondary rounded-md mb-6 mx-auto text-white w-96 md:w-1/2 lg:w-1/4 "
+          className="bg-secondary rounded-md mb-6 mx-auto text-white w-96 md:w-1/2 lg:w-1/4"
           style={{
             background: "linear-gradient(30deg, #57ddff, #c058f3)",
           }}

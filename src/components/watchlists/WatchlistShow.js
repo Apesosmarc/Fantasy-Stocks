@@ -7,6 +7,7 @@ import AddStockToWatchlist from "./AddStockToWatchlist";
 import LoadNewsButton from "../news/LoadNewsButton";
 import RenderStock from "../stocks/RenderStock";
 import WatchlistDelete from "./WatchlistDelete";
+import FirstWatchlist from "./FirstWatchlist";
 // Action Creators
 import {
   deleteStock,
@@ -124,14 +125,17 @@ class WatchlistShow extends React.Component {
 
   render() {
     return (
-      <div className="w-full flex justify-center items-center">
-        <div className="w-full">
-          {this.props.watchlists && this.renderList(this.props.watchlists)}
-
-          <Link to="/watchlist/create" className="utility-button w-full py-4">
-            New watchlist
-          </Link>
-        </div>
+      <div className="w-full flex justify-center items-center lg:pt-20">
+        {this.props.watchlists && this.props.watchlists.length === 0 ? (
+          <FirstWatchlist />
+        ) : (
+          <div className="w-full">
+            : {this.props.watchlists && this.renderList(this.props.watchlists)}
+            <Link to="/watchlist/create" className="utility-button w-full py-4">
+              New watchlist
+            </Link>
+          </div>
+        )}
       </div>
     );
   }
