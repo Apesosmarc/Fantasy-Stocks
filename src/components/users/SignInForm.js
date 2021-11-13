@@ -15,11 +15,16 @@ function SignInForm({ guestSignIn }) {
     setSelected(!selected);
   };
 
+  const setGuestSignIn = () => {
+    localStorage.setItem("guestLogin", "true");
+    guestSignIn();
+  };
+
   const renderActions = () => {
     return (
       <div className="flex flex-col gap-5">
         <button
-          onClick={guestSignIn}
+          onClick={setGuestSignIn}
           className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
         >
           Login as Guest
@@ -47,9 +52,5 @@ function SignInForm({ guestSignIn }) {
     renderModal()
   );
 }
-
-const mapStateToProps = (state) => {
-  return {};
-};
 
 export default connect(null, { guestSignIn })(SignInForm);

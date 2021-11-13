@@ -35,7 +35,7 @@ export default function Homescreen() {
           {newsSVG}
           <div className="features-copy">
             <strong className="features-header">
-              Top news based on your watchlist
+              Read a curated newsfeed based on your watchlists
             </strong>
             <p className="features-body">
               Create custom news feed based for each watchlist you create

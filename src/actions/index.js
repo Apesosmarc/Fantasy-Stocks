@@ -12,25 +12,30 @@ export const signIn = (userId) => async (dispatch) => {
 };
 
 export const signOut = () => async (dispatch) => {
-  history.push("/");
   dispatch({
     type: "SIGN_OUT",
   });
+
+  history.push("/");
 };
 
 export const guestSignIn = () => async (dispatch) => {
-  history.push(`/1`);
+  console.log("guestSignIn");
   dispatch({
     type: "GUEST_SIGN_IN",
     payload: 1,
   });
+  history.push("/1");
 };
+
+// Routes user back to homescreen
 export const guestSignOut = () => async (dispatch) => {
-  console.log("guest signed out");
   dispatch({
     type: "GUEST_SIGN_OUT",
     payload: null,
   });
+
+  history.push(`/`);
 };
 
 export const fetchUser = (userId) => async (dispatch) => {

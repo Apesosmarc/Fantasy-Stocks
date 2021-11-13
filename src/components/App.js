@@ -12,10 +12,13 @@ import NewWatchlist from "./watchlists/NewWatchlist";
 import BackgroundImage from "./header/BackgroundImage";
 import Homescreen from "./Homescreen";
 import AuthButton from "./users/AuthButton";
-
 import Header from "../components/header/Header";
+import WatchlistShow from "./watchlists/WatchlistShow";
 
 class App extends React.Component {
+  renderGuestLogin() {
+    return <Homescreen />;
+  }
   render() {
     return (
       <div>
@@ -24,9 +27,10 @@ class App extends React.Component {
 
           <div className="container mx-auto">
             <Header />
+
             <Switch>
-              <Route path="/" exact component={Homescreen} />
-              <Route component={FetchUsers} path="/:userId" exact />
+              <Route path="/" exact render={() => this.renderGuestLogin()} />
+              <Route component={FetchUsers} path="/:userId" />
               <Route path="/watchlist/create" exact component={NewWatchlist} />
             </Switch>
             <AuthButton />

@@ -6,30 +6,38 @@ import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
 import {
   signIn,
   signOut,
-  guestSignIn,
   guestSignOut,
+  guestSignIn,
 } from "../../actions/index";
 // icons
 import { googleIcon } from "../../images/svgs/socialSVG";
 
 class AuthButton extends Component {
   componentDidMount() {
-    window.gapi.load("client:auth2", () => {
-      window.gapi.client
-        .init({
-          clientId:
-            "622605634455-9rj5l7mrdvr4cars37jsgeirc6li6p9j.apps.googleusercontent.com",
-          scope: "email",
-        })
-        .then(() => {
-          this.auth = window.gapi.auth2.getAuthInstance();
+    // If Guest is logged in, do not load google oauth API
 
-          this.onAuthChange(this.auth.isSignedIn.get());
-          this.auth.isSignedIn.listen(this.onAuthChange);
-        });
-    });
+    if (localStorage.getItem("guestLogin")) {
+      this.props.guestSignIn();
+    } else {
+      window.gapi.load("client:auth2", () => {
+        window.gapi.client
+          .init({
+            clientId:
+              "622605634455-9rj5l7mrdvr4cars37jsgeirc6li6p9j.apps.googleusercontent.com",
+            scope: "email",
+          })
+          .then(() => {
+            this.auth = window.gapi.auth2.getAuthInstance();
+
+            this.onAuthChange(this.auth.isSignedIn.get());
+
+            this.auth.isSignedIn.listen(this.onAuthChange);
+          });
+      });
+    }
   }
 
+  // Google API for sign and getting userId
   onSignInClick = () => {
     this.auth.signIn();
   };
@@ -47,13 +55,13 @@ class AuthButton extends Component {
   };
 
   renderAuthButton() {
-    if (this.props.userInfo.isGuestSignedIn) {
-      return this.renderGuestSignIn();
+    // If guest is signed in only show guestSignOut btn
+    if (this.props.guestInfo.isGuestSignedIn) {
+      return this.renderGuestSignOutBtn();
     }
 
-    if (this.props.userInfo.isSignedIn === null) {
-      return null;
-    } else if (this.props.userInfo.isSignedIn === true) {
+    //if google user is signed in render 2 possible outcomes
+    if (this.props.userInfo.isSignedIn === true) {
       return (
         <button onClick={this.onSignOutClick} className="login-button">
           Sign Out
@@ -68,18 +76,18 @@ class AuthButton extends Component {
     }
   }
 
-  renderGuestSignIn() {
-    if (!this.props.userInfo.isGuestSignedIn) {
-      <button onClick={this.props.guestSignOut} className="login-button">
-        Sign In
-      </button>;
-    }
+  renderGuestSignOutBtn = () => {
     return (
-      <button onClick={this.props.guestSignOut} className="login-button">
-        Guest Sign Out
+      <button onClick={() => this.guestClickSignOut()} className="login-button">
+        Sign Out
       </button>
     );
-  }
+  };
+
+  guestClickSignOut = () => {
+    localStorage.removeItem("guestLogin");
+    this.props.guestSignOut();
+  };
 
   render() {
     return <div>{this.renderAuthButton()}</div>;
@@ -87,7 +95,9 @@ class AuthButton extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
+    guestInfo: state.user,
     userInfo: state.userInfo,
   };
 };
@@ -95,6 +105,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   signIn,
   signOut,
-  guestSignIn,
   guestSignOut,
+  guestSignIn,
 })(AuthButton);

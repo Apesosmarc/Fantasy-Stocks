@@ -13,7 +13,7 @@ module.exports = {
         secondary: "var(--color-border-secondary)",
       },
       text: {
-        primary: "var(--color-text-primary",
+        primary: "var(--color-text-primary)",
       },
     },
   },

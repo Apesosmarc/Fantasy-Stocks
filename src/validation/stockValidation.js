@@ -1,6 +1,3 @@
-import iex from "../apis/iex";
-import { addStockToWatchlist } from "../actions/index";
-
 export const checkIfValidTicker = (value) => {
   if (!value) return;
 

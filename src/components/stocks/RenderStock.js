@@ -15,15 +15,30 @@ function RenderStock({
   listIndex,
   userId,
   deleteStock,
+  loaded,
 }) {
   useEffect(() => {
     getStockQuote(ticker, stockIndex);
+
+    // if (stockQuote[stockIndex].latestSource === "close") {
+    //   stockPrice = stockQuote[stockIndex].previousClouse;
+    // } else {
+    //   stockPrice = stockQuote[stockIndex].currentPrice;
+    // }
   }, []);
 
   const redOrGreenText = (price) => {
     if (parseInt(price) > 0) return "text-green";
     return "text-red";
   };
+
+  // // if received props -> if market is closed used close price -> else use currentPrice
+  // if (Object.keys(stockQuote).length != 0) {
+  //   if (stockQuote[stockIndex].latestSource === "Close") {
+  //     stockQuote[stockIndex].currentPrice =
+  //       stockQuote[stockIndex].previousClose;
+  //   }
+  // }
 
   return (
     <React.Fragment>
@@ -32,6 +47,7 @@ function RenderStock({
           <td>{ticker}</td>
           <td
             className={
+              // concats 'text-red'||'text-green' + '-500'
               redOrGreenText(stockQuote[stockIndex].changePercent) + "-500"
             }
           >
