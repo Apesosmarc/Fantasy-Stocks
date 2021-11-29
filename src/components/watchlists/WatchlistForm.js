@@ -8,14 +8,14 @@ class WatchlistForm extends React.Component {
     return (
       <div className="field flex flex-col">
         <label
-          className="mb-2 font-bold"
+          className="mb-2 font-bold text-white"
           placeholder={placeholder}
           htmlFor={label}
         >
           {label}
         </label>
         <input
-          className="rounded h-10 mb-2 font-black"
+          className="rounded h-10 mb-2 text-black font-bold"
           placeholder={placeholder}
           {...input}
           autoComplete="off"
@@ -28,6 +28,7 @@ class WatchlistForm extends React.Component {
   onSubmit = (formValues) => {
     this.props.onClick(formValues);
   };
+
   render() {
     return (
       <form

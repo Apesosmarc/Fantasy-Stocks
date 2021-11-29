@@ -3,7 +3,16 @@
     {
       "id": 1,
       "name": "guest",
-      "watchlists": []
+      "watchlists": [
+        {
+          "title": "This is a watchlist",
+          "description": "this is a description",
+          "stocks": [
+            "INTC",
+            "TSLA"
+          ]
+        }
+      ]
     },
     {
       "id": 4441,
@@ -11,17 +20,28 @@
         {
           "title": "watchlist title",
           "description": "watchlist desc",
-          "stocks": ["TSLA"]
+          "stocks": [
+            "TSLA",
+            "AMD",
+            "MSFT"
+          ]
+        },
+        {
+          "title": "Newlist",
+          "stocks": []
         }
       ]
     },
     {
-      "id": "3251",
+      "id": "4062",
       "watchlists": [
         {
-          "title": "fdasdfsaf",
-          "description": "asdfasdf",
-          "stocks": []
+          "title": "New watchlist",
+          "stocks": [
+            "BAC",
+            "LO",
+            "HD"
+          ]
         }
       ]
     }

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 // Action Creators
 import { getStockQuote } from "../../actions/stocks";
 import { deleteStock } from "../../actions/index";
+import { test_deleteStockFromWatchlist } from "../../actions/usersTest";
 import { divide } from "lodash";
 
 function RenderStock({
@@ -15,16 +16,9 @@ function RenderStock({
   listIndex,
   userId,
   deleteStock,
-  loaded,
 }) {
   useEffect(() => {
     getStockQuote(ticker, stockIndex);
-
-    // if (stockQuote[stockIndex].latestSource === "close") {
-    //   stockPrice = stockQuote[stockIndex].previousClouse;
-    // } else {
-    //   stockPrice = stockQuote[stockIndex].currentPrice;
-    // }
   }, []);
 
   const redOrGreenText = (price) => {
@@ -32,13 +26,13 @@ function RenderStock({
     return "text-red";
   };
 
-  // // if received props -> if market is closed used close price -> else use currentPrice
-  // if (Object.keys(stockQuote).length != 0) {
-  //   if (stockQuote[stockIndex].latestSource === "Close") {
-  //     stockQuote[stockIndex].currentPrice =
-  //       stockQuote[stockIndex].previousClose;
-  //   }
-  // }
+  // if received props -> if market is closed used last close price -> else use currentPrice
+  if (stockQuote[stockIndex]) {
+    if (stockQuote[stockIndex].latestSource === "Close") {
+      stockQuote[stockIndex].currentPrice =
+        stockQuote[stockIndex].previousClose;
+    }
+  }
 
   return (
     <React.Fragment>
@@ -64,7 +58,10 @@ function RenderStock({
           <td>
             <button
               className="p-5"
-              onClick={() => deleteStock(userId, listIndex, stockIndex)}
+              onClick={() => {
+                deleteStock(userId, listIndex, stockIndex);
+                // test_deleteStockFromWatchlist(ticker, index, listId, userId);
+              }}
             >
               X
             </button>

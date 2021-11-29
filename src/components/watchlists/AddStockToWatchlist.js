@@ -12,6 +12,10 @@ class AddStockToWatchlist extends React.Component {
   renderInput = ({ input, label, meta }) => {
     input.value = checkIfValidTicker(input.value);
 
+    if (meta.submitting) {
+      input.value = "";
+    }
+
     return (
       <div className="flex flex-col h-20 justify-center">
         <input
@@ -28,7 +32,7 @@ class AddStockToWatchlist extends React.Component {
   serverValidate = async (formValues) => {
     const ticker = formValues.ticker.toUpperCase();
 
-    const response = await iex
+    await iex
       .get(`/stock/${ticker}/quote`)
       .then((res) => {
         this.props.onClick(ticker, this.props.index);
@@ -57,7 +61,7 @@ class AddStockToWatchlist extends React.Component {
             component={this.renderInput}
           />
 
-          <button className=" ml-2 bg-btnPrimary text-lg hover:bg-blue-700 text-white py-2 px-4 font-bold rounded self-center flex-grow-0">
+          <button className=" ml-2 bg-btnPrimary utility-button py-2 px-4 flex-grow-0">
             Add To List
           </button>
         </form>

@@ -2,6 +2,8 @@ import users from "../apis/users";
 import _ from "lodash";
 import history from "../history";
 
+export { googleSignIn, googleSignOut } from "./OAuth2";
+
 export const signIn = (userId) => async (dispatch) => {
   userId = userId.slice(-4);
   dispatch({
@@ -133,7 +135,7 @@ export const createWatchlist = (formValues, id) => async (dispatch) => {
     type: "CREATE_WATCHLIST",
     payload: patched.data,
   });
-  history.push("/");
+  history.push(`/${id}`);
 };
 
 // Stock action creators

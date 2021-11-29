@@ -6,12 +6,12 @@ import SignInForm from "./users/SignInForm";
 export default function Homescreen() {
   return (
     <main className="bg-secondary rounded-md px-5">
-      <section className="py-20">
-        <h1 className="text-3xl capitalize tracking-wider mb-10">
+      <section className="py-20 flex justify-center flex-col items-center">
+        <h1 className="text-3xl capitalize tracking-wider mb-10 ">
           all the market info you need at a glance
         </h1>
 
-        <h2 className="text-xl capitalize mb-10">
+        <h2 className="text-xl capitalize mb-10 tracking-wider">
           Real time stock quotes & news tailored to your holdings
         </h2>
 
@@ -22,9 +22,7 @@ export default function Homescreen() {
         <div className="features-card">
           {dataSVG}
           <div className="features-copy">
-            <strong className="features-header">
-              Keep up to date with your favorites
-            </strong>
+            <strong className="features-header">Follow your favorites</strong>
             <p className="features-body">
               Get real time prices on your watchlists without having to login to
               your brokerage
@@ -35,10 +33,10 @@ export default function Homescreen() {
           {newsSVG}
           <div className="features-copy">
             <strong className="features-header">
-              Read a curated newsfeed based on your watchlists
+              Stay Informed on your holdings
             </strong>
             <p className="features-body">
-              Create custom news feed based for each watchlist you create
+              Create custom newsfeeds based on the watchlists you create
             </p>
           </div>
         </div>

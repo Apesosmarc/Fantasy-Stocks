@@ -8,6 +8,7 @@ const Modal = (props) => {
       className="absolute h-full w-full bg-black bg-opacity-90 delete-modal flex justify-center items-center"
     >
       <div
+        // only clicking outside the form exits the modal
         onClick={(e) => e.stopPropagation()}
         className=" p-5 bg-secondary delete-modal"
       >

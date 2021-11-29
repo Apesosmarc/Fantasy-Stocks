@@ -10,22 +10,28 @@ import WatchlistDelete from "./WatchlistDelete";
 import FirstWatchlist from "./FirstWatchlist";
 // Action Creators
 import {
-  deleteStock,
   deleteWatchlist,
   addStockToWatchlist,
   fetchUser,
 } from "../../actions/";
+
+import {
+  test_addStockToWatchList,
+  test_fetchUser,
+} from "../../actions/usersTest";
 import { getStockQuote } from "../../actions/stocks";
 
 class WatchlistShow extends React.Component {
   componentDidMount() {
     this.props.fetchUser(this.props.id);
+    // this.props.test_fetchUser(this.props.id)
   }
   state = {
     toggle: false,
     openLists: [],
   };
 
+  // Toggles add stock input field
   toggleStockInput(index) {
     if (this.state.openLists.includes(index)) {
       return;
@@ -40,6 +46,8 @@ class WatchlistShow extends React.Component {
     console.log(ticker, index);
 
     this.props.addStockToWatchlist(ticker, index, this.props.id);
+
+    // this.props.test_addStockToWatchList(ticker, index, listId, userId);
   };
 
   deleteWatchlist(index) {
@@ -53,6 +61,7 @@ class WatchlistShow extends React.Component {
     });
   }
 
+  // passes user.watchlist.stocks array to renderstocks components
   renderStocks(stocks, listIndex) {
     return stocks.map((stock, index) => {
       return (
@@ -108,7 +117,7 @@ class WatchlistShow extends React.Component {
               ) : (
                 <button
                   onClick={() => this.toggleStockInput(index)}
-                  className="utility-button text-lg py-2 px-4 w-2/4"
+                  className="utility-button text-lg py-2 px-4 w-2/4 mt-4"
                 >
                   Add Stock
                 </button>
@@ -126,6 +135,7 @@ class WatchlistShow extends React.Component {
   render() {
     return (
       <div className="w-full flex justify-center items-center lg:pt-20">
+        {/* If user has not added watchlist, prompt to create */}
         {this.props.watchlists && this.props.watchlists.length === 0 ? (
           <FirstWatchlist />
         ) : (
@@ -150,7 +160,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   fetchUser,
   deleteWatchlist,
-  deleteStock,
   addStockToWatchlist,
   getStockQuote,
+  test_addStockToWatchList,
 })(WatchlistShow);

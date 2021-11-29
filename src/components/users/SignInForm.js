@@ -6,11 +6,12 @@ import { connect } from "react-redux";
 import { guestSignIn } from "../../actions/index";
 //Components
 import Modal from "../../Modal";
-import AuthButton from "./AuthButton";
+import SignInButton from "./SignInButton";
 
 function SignInForm({ guestSignIn }) {
   const [selected, setSelected] = useState(false);
 
+  // boolean that indicates if user login modal is displayed or not
   const toggleSelected = () => {
     setSelected(!selected);
   };
@@ -22,15 +23,15 @@ function SignInForm({ guestSignIn }) {
 
   const renderActions = () => {
     return (
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 justify-center items-center">
         <button
           onClick={setGuestSignIn}
-          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+          className="bg-transparent 0 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500  rounded"
         >
           Login as Guest
         </button>
 
-        <AuthButton />
+        <SignInButton />
       </div>
     );
   };
@@ -44,7 +45,7 @@ function SignInForm({ guestSignIn }) {
   return selected === false ? (
     <button
       onClick={() => setSelected(!selected)}
-      className="utility-button px-4 py-2"
+      className="utility-button px-6 py-3"
     >
       Log In
     </button>

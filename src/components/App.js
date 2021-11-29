@@ -4,21 +4,20 @@ import { connect } from "react-redux";
 import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
 import history from "../history";
 // ACTION CREATORS
-import { signIn, signOut, guestSignIn, guestSignOut } from "../actions";
-
+// import { createUser } from "../actions/usersTest";
 // COMPONENTS
 import FetchUsers from "./users/FetchUsers";
 import NewWatchlist from "./watchlists/NewWatchlist";
 import BackgroundImage from "./header/BackgroundImage";
 import Homescreen from "./Homescreen";
-import AuthButton from "./users/AuthButton";
+import SignInButton from "./users/SignInButton";
 import Header from "../components/header/Header";
-import WatchlistShow from "./watchlists/WatchlistShow";
 
 class App extends React.Component {
-  renderGuestLogin() {
-    return <Homescreen />;
+  componentDidMount() {
+    // this.props.createUser();
   }
+
   render() {
     return (
       <div>
@@ -29,11 +28,11 @@ class App extends React.Component {
             <Header />
 
             <Switch>
-              <Route path="/" exact render={() => this.renderGuestLogin()} />
-              <Route component={FetchUsers} path="/:userId" />
+              <Route exact path="/" component={Homescreen} />
               <Route path="/watchlist/create" exact component={NewWatchlist} />
+              <Route component={FetchUsers} path="/:userId" />
             </Switch>
-            <AuthButton />
+            <SignInButton />
           </div>
         </Router>
       </div>
@@ -42,11 +41,9 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { userInfo: state.userInfo };
+  console.log(state);
+  return { userInfo: state.userInfo, currentUser: state.user };
 };
 export default connect(mapStateToProps, {
-  signIn,
-  signOut,
-  guestSignIn,
-  guestSignOut,
+  // createUser,
 })(App);

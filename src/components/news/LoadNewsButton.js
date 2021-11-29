@@ -53,11 +53,11 @@ class LoadNewsButton extends Component {
 
   render() {
     return (
-      <div className="w-full lg:pt-5">
+      <div className="w-full  mt-8">
         <div
           className="bg-secondary rounded-md mb-6 mx-auto text-white w-96 md:w-1/2 lg:w-1/4"
           style={{
-            background: "linear-gradient(30deg, #57ddff, #c058f3)",
+            background: "linear-gradient(45deg, #3a7bfd, #c058f3)",
           }}
         >
           <button
@@ -90,7 +90,7 @@ const mapStateToProps = (state) => {
   for (let stock in state.news) {
     state.news[stock].forEach((article) => newsArr.push(article));
   }
-
+  console.log(newsArr);
   return {
     news: newsArr,
   };
