@@ -11,11 +11,13 @@ class NewWatchlist extends React.Component {
     // fetch state??
   }
   onSubmit = (formValues) => {
+    // auto capitalize
     formValues.title =
       formValues.title[0].toUpperCase() + formValues.title.substr(1);
 
-    this.props.createWatchlist(formValues, this.props.currentUser.id);
-    // this.props.test_createWatchlist(formValues, this.props.currentUser.id);
+    // this.props.createWatchlist(formValues, this.props.currentUser.id);
+
+    this.props.test_createWatchlist(this.props.currentUser.OAuthId, formValues);
   };
 
   render() {
@@ -29,11 +31,12 @@ class NewWatchlist extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.user,
+    currentUser: state.testAPI.currentUser,
     userInfo: state.userInfo,
   };
 };
 
 export default connect(mapStateToProps, {
   createWatchlist,
+  test_createWatchlist,
 })(NewWatchlist);

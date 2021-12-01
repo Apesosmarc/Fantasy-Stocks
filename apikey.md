@@ -1,4 +1,0 @@
-newsapi.org
-
-key
-5657f7cd3ae944c487afd9146324277f

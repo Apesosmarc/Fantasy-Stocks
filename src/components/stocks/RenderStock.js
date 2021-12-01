@@ -6,18 +6,18 @@ import { connect } from "react-redux";
 import { getStockQuote } from "../../actions/stocks";
 import { deleteStock } from "../../actions/index";
 import { test_deleteStockFromWatchlist } from "../../actions/usersTest";
-import { divide } from "lodash";
 
 function RenderStock({
   stockQuote,
   getStockQuote,
   ticker,
   stockIndex,
-  listIndex,
-  userId,
-  deleteStock,
+  listId,
+  OAuthId,
+  test_deleteStockFromWatchlist,
 }) {
   useEffect(() => {
+    // action creator
     getStockQuote(ticker, stockIndex);
   }, []);
 
@@ -26,7 +26,7 @@ function RenderStock({
     return "text-red";
   };
 
-  // if received props -> if market is closed used last close price -> else use currentPrice
+  // if received props, check if market is closed used last close price, else use currentPrice
   if (stockQuote[stockIndex]) {
     if (stockQuote[stockIndex].latestSource === "Close") {
       stockQuote[stockIndex].currentPrice =
@@ -59,8 +59,9 @@ function RenderStock({
             <button
               className="p-5"
               onClick={() => {
-                deleteStock(userId, listIndex, stockIndex);
-                // test_deleteStockFromWatchlist(ticker, index, listId, userId);
+                // deleteStock(userId, listIndex, stockIndex);
+
+                test_deleteStockFromWatchlist(ticker, listId, OAuthId);
               }}
             >
               X
@@ -83,4 +84,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   getStockQuote,
   deleteStock,
+  test_deleteStockFromWatchlist,
 })(RenderStock);

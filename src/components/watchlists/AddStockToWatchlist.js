@@ -2,7 +2,7 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 // Action creators
-import { addStockToWatchlist } from "../../actions";
+
 // Validation
 import { checkIfValidTicker } from "../../validation/stockValidation";
 import iex from "../../apis/iex";
@@ -35,7 +35,7 @@ class AddStockToWatchlist extends React.Component {
     await iex
       .get(`/stock/${ticker}/quote`)
       .then((res) => {
-        this.props.onClick(ticker, this.props.index);
+        this.props.onClick(ticker, "61a7a66c049635d1757bb275", 4441);
         formValues.ticker = "";
       })
       .catch((error) => {

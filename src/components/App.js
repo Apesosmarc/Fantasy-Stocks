@@ -41,7 +41,6 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return { userInfo: state.userInfo, currentUser: state.user };
 };
 export default connect(mapStateToProps, {

@@ -90,7 +90,7 @@ const mapStateToProps = (state) => {
   for (let stock in state.news) {
     state.news[stock].forEach((article) => newsArr.push(article));
   }
-  console.log(newsArr);
+
   return {
     news: newsArr,
   };

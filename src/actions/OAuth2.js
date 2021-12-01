@@ -3,7 +3,6 @@ import _ from "lodash";
 import history from "../history";
 
 export const googleSignIn = (userId) => async (dispatch) => {
-  console.log(userId);
   userId = userId.slice(-4);
   dispatch({
     type: "SIGN_IN",

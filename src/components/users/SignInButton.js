@@ -31,7 +31,6 @@ class SignInButton extends Component {
             this.auth = window.gapi.auth2.getAuthInstance();
 
             this.onAuthChange(this.auth.isSignedIn.get());
-            console.log(this.auth.isSignedIn.get());
 
             this.auth.isSignedIn.listen(this.onAuthChange);
           });
@@ -44,7 +43,6 @@ class SignInButton extends Component {
   };
 
   onGoogleSignOutClick = () => {
-    console.log("wat");
     this.auth.signOut();
   };
 
@@ -60,7 +58,6 @@ class SignInButton extends Component {
 
   renderGoogleSignOutBtn = () => {
     if (this.props.googleAuth.isSignedIn === true) {
-      console.log("ok");
       return (
         <button onClick={this.onGoogleSignOutClick} className="login-button">
           Sign Out

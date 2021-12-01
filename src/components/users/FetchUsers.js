@@ -5,7 +5,8 @@ import history from "../../history";
 //Components
 import WatchlistShow from "../watchlists/WatchlistShow";
 import Homescreen from "../Homescreen";
-import { test_fetchUser } from "../../actions/usersTest";
+import ValidateUsers from "./ValidateUsers";
+import { test_userExists, test_createUser } from "../../actions/usersTest";
 
 class FetchUser extends Component {
   validateUser() {
@@ -14,13 +15,17 @@ class FetchUser extends Component {
       return <WatchlistShow id="1" />;
     }
 
-    // check if the OAuth2 id entered into URL is the one stored in state.
+    // check if the user id entered into URL is googleAuthID
     const URL_ID = this.props.match.params.userId;
     if (this.props.googleAuth.userId == URL_ID) {
-      return <WatchlistShow id={URL_ID} />;
+      // // checks if user exists in DB
+      // return this.checkIfUserExists(URL_ID);
+
+      return <ValidateUsers id={URL_ID} />;
+    } else {
+      // if not, redirect to home/login
+      return <Homescreen />;
     }
-    // if not, redirect to home/login
-    return <Homescreen />;
   }
 
   render() {
@@ -30,12 +35,10 @@ class FetchUser extends Component {
     ) : (
       <div className="text-white text-xl">loading...</div>
     );
-    return <div></div>;
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     googleAuth: state.googleAuth,
     guestAuth: state.guestAuth,

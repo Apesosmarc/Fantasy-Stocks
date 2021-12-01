@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Modal from "../../Modal";
 
 import { Link } from "react-router-dom";
-import history from "../../history";
 
 export default function WatchlistDelete({ index, title, onDelete }) {
   const [selected, setSelected] = useState(false);

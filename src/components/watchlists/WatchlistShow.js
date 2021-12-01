@@ -15,17 +15,20 @@ import {
   fetchUser,
 } from "../../actions/";
 
+import { test_fetchUser } from "../../actions/usersTest";
+
 import {
   test_addStockToWatchList,
-  test_fetchUser,
+  test_deleteWatchlist,
 } from "../../actions/usersTest";
 import { getStockQuote } from "../../actions/stocks";
 
 class WatchlistShow extends React.Component {
   componentDidMount() {
     this.props.fetchUser(this.props.id);
-    // this.props.test_fetchUser(this.props.id)
+    this.props.test_fetchUser(this.props.id);
   }
+
   state = {
     toggle: false,
     openLists: [],
@@ -42,41 +45,47 @@ class WatchlistShow extends React.Component {
     });
   }
 
-  onSubmit = (ticker, index) => {
-    console.log(ticker, index);
+  onSubmit = (ticker, listId, OAuthId) => {
+    this.props.test_addStockToWatchList(ticker, listId, OAuthId);
 
-    this.props.addStockToWatchlist(ticker, index, this.props.id);
-
-    // this.props.test_addStockToWatchList(ticker, index, listId, userId);
+    // this.props.addStockToWatchlist(ticker, index, this.props.id);
   };
 
   deleteWatchlist(index) {
-    this.props.deleteWatchlist(this.props.id, index);
+    // o authid, listId
+
+    this.props.test_deleteWatchlist(
+      this.props.test_currentUser.OAuthId,
+      "61a79c5f049635d1757bb259"
+    );
 
     // removes deleted array from array of opened lists
-    this.setState({
-      openLists: this.state.openLists.filter(
-        (list, listIndex) => listIndex != index - 1
-      ),
-    });
+    // this.setState({
+    //   openLists: this.state.openLists.filter(
+    //     (list, listIndex) => listIndex != index - 1
+    //   ),
+    // });
   }
 
   // passes user.watchlist.stocks array to renderstocks components
-  renderStocks(stocks, listIndex) {
+  renderStocks(stocks, listId) {
+    console.log(listId);
     return stocks.map((stock, index) => {
       return (
         <RenderStock
           ticker={stock}
           stockIndex={index}
-          listIndex={listIndex}
-          userId={this.props.id}
+          listId={listId}
+          OAuthId={this.props.id}
         />
       );
     });
   }
 
-  renderList() {
-    return this.props.watchlists.map((list, index) => {
+  renderList(watchlists) {
+    // standard arr of objects
+
+    return watchlists.map((list, index) => {
       return (
         <React.Fragment>
           <div className="relative flex flex-col justify-center items-center bg-secondary rounded-md mb-4 text-center w-96 md:w-1/2 lg:w-1/3 mx-auto">
@@ -104,7 +113,9 @@ class WatchlistShow extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {list.stocks && this.renderStocks(list.stocks, index)}
+                {/* {list.stocks && this.renderStocks(list.stocks, index)} */}
+                {list.stocks.length > 0 &&
+                  this.renderStocks(list.stocks, list._id)}
               </tbody>
             </table>
             <div className="flex flex-col py-6 px-4 w-full justify-center items-center">
@@ -135,12 +146,14 @@ class WatchlistShow extends React.Component {
   render() {
     return (
       <div className="w-full flex justify-center items-center lg:pt-20">
-        {/* If user has not added watchlist, prompt to create */}
-        {this.props.watchlists && this.props.watchlists.length === 0 ? (
+        {this.props.test_currentUser &&
+        this.props.test_currentUser.watchlists.length === 0 ? (
           <FirstWatchlist />
         ) : (
           <div className="w-full">
-            : {this.props.watchlists && this.renderList(this.props.watchlists)}
+            :
+            {this.props.test_currentUser &&
+              this.renderList(this.props.test_currentUser.watchlists)}
             <Link to="/watchlist/create" className="utility-button w-full py-4">
               New watchlist
             </Link>
@@ -151,8 +164,20 @@ class WatchlistShow extends React.Component {
   }
 }
 
+// {/* If watchlists are loaded && user has not added watchlist, prompt to create */}
+// {this.props.watchlists && this.props.watchlists.length === 0 ? (
+//   <FirstWatchlist />
+// ) : (
+//   <div className="w-full">
+//     : {this.props.watchlists && this.renderList(this.props.watchlists)}
+//     <Link to="/watchlist/create" className="utility-button w-full py-4">
+//       New watchlist
+//     </Link>
+//   </div>
+// )}
 const mapStateToProps = (state) => {
   return {
+    test_currentUser: state.testAPI.currentUser,
     watchlists: state.user.watchlists,
   };
 };
@@ -163,4 +188,6 @@ export default connect(mapStateToProps, {
   addStockToWatchlist,
   getStockQuote,
   test_addStockToWatchList,
+  test_fetchUser,
+  test_deleteWatchlist,
 })(WatchlistShow);
