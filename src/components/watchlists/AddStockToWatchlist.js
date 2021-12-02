@@ -1,15 +1,13 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { connect } from "react-redux";
-// Action creators
-
+import { reset } from "redux-form";
 // Validation
 import { checkIfValidTicker } from "../../validation/stockValidation";
 import iex from "../../apis/iex";
 import { SubmissionError } from "redux-form";
 
 class AddStockToWatchlist extends React.Component {
-  renderInput = ({ input, label, meta }) => {
+  renderInput = ({ input, meta, label }) => {
     input.value = checkIfValidTicker(input.value);
 
     if (meta.submitting) {
@@ -24,7 +22,10 @@ class AddStockToWatchlist extends React.Component {
           placeholder="Enter symbol"
           autoComplete="off"
         />
-        <div> {meta.error && meta.touched && meta.error}</div>
+
+        <div className="m-3 text-red-500">
+          {meta.error && meta.touched && meta.error}
+        </div>
       </div>
     );
   };
@@ -35,8 +36,8 @@ class AddStockToWatchlist extends React.Component {
     await iex
       .get(`/stock/${ticker}/quote`)
       .then((res) => {
-        this.props.onClick(ticker, "61a7a66c049635d1757bb275", 4441);
-        formValues.ticker = "";
+        this.props.onClick(ticker, this.props.listId, 4441);
+        reset();
       })
       .catch((error) => {
         if (error.response.status === 404) {
@@ -71,6 +72,7 @@ class AddStockToWatchlist extends React.Component {
 }
 
 const validate = (formValues) => {
+  console.log(formValues);
   const errors = {};
   if (!formValues.ticker) {
     errors.ticker = "Please enter a ticker";

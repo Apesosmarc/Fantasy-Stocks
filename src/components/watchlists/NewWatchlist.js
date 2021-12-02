@@ -1,23 +1,17 @@
 import React from "react";
-import WatchlistForm from "./WatchlistForm";
-import { createWatchlist } from "../../actions";
-import { test_createWatchlist } from "../../actions/usersTest";
 import { connect } from "react-redux";
-
-import { Link } from "react-router-dom";
+//comps
+import WatchlistForm from "./WatchlistForm";
+//action creators
+import { createWatchlist } from "../../actions";
 
 class NewWatchlist extends React.Component {
-  componentDidMount() {
-    // fetch state??
-  }
   onSubmit = (formValues) => {
     // auto capitalize
     formValues.title =
       formValues.title[0].toUpperCase() + formValues.title.substr(1);
 
-    // this.props.createWatchlist(formValues, this.props.currentUser.id);
-
-    this.props.test_createWatchlist(this.props.currentUser.OAuthId, formValues);
+    this.props.createWatchlist(this.props.currentUser.OAuthId, formValues);
   };
 
   render() {
@@ -31,12 +25,10 @@ class NewWatchlist extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.testAPI.currentUser,
-    userInfo: state.userInfo,
+    currentUser: state.users.currentUser,
   };
 };
 
 export default connect(mapStateToProps, {
   createWatchlist,
-  test_createWatchlist,
 })(NewWatchlist);

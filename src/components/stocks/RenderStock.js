@@ -1,11 +1,8 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 // Action Creators
-import { getStockQuote } from "../../actions/stocks";
-import { deleteStock } from "../../actions/index";
-import { test_deleteStockFromWatchlist } from "../../actions/usersTest";
+import { getStockQuote, deleteStockFromWatchlist } from "../../actions";
 
 function RenderStock({
   stockQuote,
@@ -14,7 +11,7 @@ function RenderStock({
   stockIndex,
   listId,
   OAuthId,
-  test_deleteStockFromWatchlist,
+  deleteStockFromWatchlist,
 }) {
   useEffect(() => {
     // action creator
@@ -59,9 +56,7 @@ function RenderStock({
             <button
               className="p-5"
               onClick={() => {
-                // deleteStock(userId, listIndex, stockIndex);
-
-                test_deleteStockFromWatchlist(ticker, listId, OAuthId);
+                deleteStockFromWatchlist(ticker, listId, OAuthId);
               }}
             >
               X
@@ -83,6 +78,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   getStockQuote,
-  deleteStock,
-  test_deleteStockFromWatchlist,
+  deleteStockFromWatchlist,
 })(RenderStock);

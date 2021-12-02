@@ -41,7 +41,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { userInfo: state.userInfo, currentUser: state.user };
+  // PASS USER ID HERE
 };
 export default connect(mapStateToProps, {
   // createUser,

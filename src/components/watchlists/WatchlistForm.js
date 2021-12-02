@@ -15,7 +15,7 @@ class WatchlistForm extends React.Component {
           {label}
         </label>
         <input
-          className="rounded h-10 mb-2 text-black font-bold"
+          className="rounded h-10 mb-2 text-black font-bold p-2"
           placeholder={placeholder}
           {...input}
           autoComplete="off"

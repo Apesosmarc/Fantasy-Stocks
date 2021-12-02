@@ -1,22 +1,19 @@
-import UsersReducer from "./UsersReducer";
 import StocksReducer from "./StocksReducer";
-import { reducer as formReducer } from "redux-form";
 import { combineReducers } from "redux";
-import themeReducer from "./themeReducer";
-import newsReducer from "./newsReducer";
-import testAPIReducer from "./testAPIReducer";
-import OAuth2Reducer from "./OAuth2Reducer";
-import googleAuthReducer from "./googleAuthReducer";
-import guestAuthReducer from "./guestAuthReducer";
+import ThemeReducer from "./ThemeReducer";
+import NewsReducer from "./NewsReducer";
+import UsersReducer from "./UsersReducer";
+import GoogleAuthReducer from "./GoogleAuthReducer";
+import GuestAuthReducer from "./GuestAuthReducer";
+// reduxform reducer
+import { reducer as formReducer } from "redux-form";
 
 export default combineReducers({
   form: formReducer,
-  news: newsReducer,
+  news: NewsReducer,
   stocks: StocksReducer,
-  theme: themeReducer,
-  user: UsersReducer,
-  googleAuth: googleAuthReducer,
-  testAPI: testAPIReducer,
-  guestAuth: guestAuthReducer,
-  // googleAuth: OAuth2Reducer,
+  theme: ThemeReducer,
+  users: UsersReducer,
+  googleAuth: GoogleAuthReducer,
+  guestAuth: GuestAuthReducer,
 });

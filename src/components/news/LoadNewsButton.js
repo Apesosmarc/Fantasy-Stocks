@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 // Action Creators
-import { getNews } from "../../actions/news";
+import { getNews } from "../../actions";
 
 class LoadNewsButton extends Component {
   state = {

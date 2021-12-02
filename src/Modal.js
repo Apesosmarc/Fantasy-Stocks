@@ -5,7 +5,7 @@ const Modal = (props) => {
   return ReactDOM.createPortal(
     <div
       onClick={props.onDismiss}
-      className="absolute h-full w-full bg-black bg-opacity-90 delete-modal flex justify-center items-center"
+      className="absolute h-screen min-h-screen w-full bg-black bg-opacity-90 delete-modal flex justify-center items-center"
     >
       <div
         // only clicking outside the form exits the modal

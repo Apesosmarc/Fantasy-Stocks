@@ -1,5 +1,3 @@
-import axios from "axios";
-import history from "../history";
 import iex from "../apis/iex";
 
 export const getStockQuote = (ticker, stockIndex) => async (dispatch) => {
@@ -15,20 +13,8 @@ export const getStockQuote = (ticker, stockIndex) => async (dispatch) => {
     };
   });
 
-  // const response1 = {
-  //   changePercent: null,
-  //   currentPrice: null,
-  //   companyFullName: null,
-  //   avgVolume: null,
-  //   index: null,
-  //   latestSource: "Close",
-  //   previousClose: "15.89",
-  // };
-
   dispatch({
     type: "GET_STOCK_QUOTE",
     payload: response,
   });
 };
-
-export const searchStock = (ticker) => async (dispatch) => {};

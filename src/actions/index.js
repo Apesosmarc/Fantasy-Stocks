@@ -1,158 +1,154 @@
-import users from "../apis/users";
-import _ from "lodash";
-import history from "../history";
-
 export { googleSignIn, googleSignOut } from "./OAuth2";
 
-export const signIn = (userId) => async (dispatch) => {
-  userId = userId.slice(-4);
-  dispatch({
-    type: "SIGN_IN",
-    payload: userId,
-  });
-  history.push(`/${userId}`);
-};
+export { guestSignIn, guestSignOut } from "./guestAuth";
 
-export const signOut = () => async (dispatch) => {
-  dispatch({
-    type: "SIGN_OUT",
-  });
+export { fetchUser, createUser, loginUser, userExists } from "./users";
 
-  history.push("/");
-};
+export {
+  createWatchlist,
+  deleteWatchlist,
+  addStockToWatchlist,
+  deleteStockFromWatchlist,
+} from "./watchlists";
 
-export const guestSignIn = () => async (dispatch) => {
-  console.log("guestSignIn");
-  dispatch({
-    type: "GUEST_SIGN_IN",
-    payload: 1,
-  });
-  history.push("/1");
-};
+export { getStockQuote } from "./stocks";
 
-// Routes user back to homescreen
-export const guestSignOut = () => async (dispatch) => {
-  dispatch({
-    type: "GUEST_SIGN_OUT",
-    payload: null,
-  });
+export { getNews } from "./news";
 
-  history.push(`/`);
-};
+export { getTheme, setDarkMode, setLightMode } from "./getTheme";
 
-export const fetchUser = (userId) => async (dispatch) => {
-  return await users
-    .get(`/${userId}`)
-    .then((response) => {
-      dispatch({
-        type: "FETCH_USER",
-        payload: response.data,
-      });
-    })
-    .catch(async (error) => {
-      const response = await users.post("", {
-        id: userId,
-        watchlists: [],
-      });
+// export const guestSignIn = () => async (dispatch) => {
+//   console.log("guestSignIn");
+//   dispatch({
+//     type: "GUEST_SIGN_IN",
+//     payload: 1,
+//   });
+//   history.push("/1");
+// };
 
-      dispatch({
-        type: "CREATE_USER",
-        payload: response.data,
-      });
-    });
-};
+// // Routes user back to homescreen
+// export const guestSignOut = () => async (dispatch) => {
+//   dispatch({
+//     type: "GUEST_SIGN_OUT",
+//     payload: null,
+//   });
 
-export const createUser = (userId) => async (dispatch) => {};
+//   history.push(`/`);
+// };
 
-export const fetchWatchlist = (id) => async (dispatch) => {
-  const response = await users.get(`./users/${id}`);
+// // export const fetchUser = (userId) => async (dispatch) => {
+// //   return await users
+// //     .get(`/${userId}`)
+// //     .then((response) => {
+// //       dispatch({
+// //         type: "FETCH_USER",
+// //         payload: response.data,
+// //       });
+// //     })
+// //     .catch(async (error) => {
+// //       const response = await users.post("", {
+// //         id: userId,
+// //         watchlists: [],
+// //       });
 
-  dispatch({
-    type: "FETCH_WATCHLIST",
-    payload: response.data,
-  });
-};
+// //       dispatch({
+// //         type: "CREATE_USER",
+// //         payload: response.data,
+// //       });
+// //     });
+// // };
 
-export const fetchWatchlists = () => async (dispatch) => {
-  const response = await users.get("./users");
+// // export const createUser = (userId) => async (dispatch) => {};
 
-  dispatch({
-    type: "FETCH_WATCHLISTS",
-    payload: response.data,
-  });
-};
+// // export const fetchWatchlist = (id) => async (dispatch) => {
+// //   const response = await users.get(`./users/${id}`);
 
-export const fetchState = () => async (dispatch) => {
-  dispatch({
-    type: "FETCH_STATE",
-  });
-};
+// //   dispatch({
+// //     type: "FETCH_WATCHLIST",
+// //     payload: response.data,
+// //   });
+// // };
 
-export const deleteWatchlist = (id, index) => async (dispatch) => {
-  const patched = await users.get(`/${id}`).then((response) => {
-    const res = response;
-    res.data.watchlists.splice(index, 1);
-    return users.patch(`/${id}`, {
-      ...res.data,
-    });
-  });
+// // export const fetchWatchlists = () => async (dispatch) => {
+// //   const response = await users.get("./users");
 
-  dispatch({
-    type: "DELETE_WATCHLIST",
-    payload: patched.data,
-  });
-};
+// //   dispatch({
+// //     type: "FETCH_WATCHLISTS",
+// //     payload: response.data,
+// //   });
+// // };
 
-export const deleteStock = (id, listIndex, stockIndex) => async (dispatch) => {
-  const patched = await users.get(`/${id}`).then((response) => {
-    const res = response;
-    res.data.watchlists[listIndex].stocks.splice(stockIndex, 1);
-    return users.patch(`/${id}`, {
-      ...res.data,
-    });
-  });
+// // export const fetchState = () => async (dispatch) => {
+// //   dispatch({
+// //     type: "FETCH_STATE",
+// //   });
+// // };
 
-  dispatch({
-    type: "DELETE_STOCK",
-    payload: patched.data,
-  });
-};
+// // export const deleteWatchlist = (id, index) => async (dispatch) => {
+// //   const patched = await users.get(`/${id}`).then((response) => {
+// //     const res = response;
+// //     res.data.watchlists.splice(index, 1);
+// //     return users.patch(`/${id}`, {
+// //       ...res.data,
+// //     });
+// //   });
 
-export const createWatchlist = (formValues, id) => async (dispatch) => {
-  const newWatchlist = {
-    ...formValues,
-    stocks: [],
-  };
+// //   dispatch({
+// //     type: "DELETE_WATCHLIST",
+// //     payload: patched.data,
+// //   });
+// // };
 
-  const patched = await users.get(`/${id}`).then((response) =>
-    users.patch(`/${id}`, {
-      ...response.data,
-      ...response.data.watchlists.push(newWatchlist),
-    })
-  );
+// // export const deleteStock = (id, listIndex, stockIndex) => async (dispatch) => {
+// //   const patched = await users.get(`/${id}`).then((response) => {
+// //     const res = response;
+// //     res.data.watchlists[listIndex].stocks.splice(stockIndex, 1);
+// //     return users.patch(`/${id}`, {
+// //       ...res.data,
+// //     });
+// //   });
 
-  dispatch({
-    type: "CREATE_WATCHLIST",
-    payload: patched.data,
-  });
-  history.push(`/${id}`);
-};
+// //   dispatch({
+// //     type: "DELETE_STOCK",
+// //     payload: patched.data,
+// //   });
+// // };
 
-// Stock action creators
+// // export const createWatchlist = (formValues, id) => async (dispatch) => {
+// //   const newWatchlist = {
+// //     ...formValues,
+// //     stocks: [],
+// //   };
 
-export const addStockToWatchlist = (ticker, index, id) => async (dispatch) => {
-  const path = `/${id}`;
-  const patched = await users.get(path).then((response) => {
-    const res = response;
-    res.data.watchlists[index].stocks.push(ticker);
-    return users.patch(path, {
-      ...res.data,
-    });
-  });
+// //   const patched = await users.get(`/${id}`).then((response) =>
+// //     users.patch(`/${id}`, {
+// //       ...response.data,
+// //       ...response.data.watchlists.push(newWatchlist),
+// //     })
+// //   );
 
-  dispatch({
-    type: "ADD_STOCK_TO_WATCHLIST",
-    payload: patched.data,
-  });
-  return patched;
-};
+// //   dispatch({
+// //     type: "CREATE_WATCHLIST",
+// //     payload: patched.data,
+// //   });
+// //   history.push(`/${id}`);
+// // };
+
+// // // Stock action creators
+
+// // export const addStockToWatchlist = (ticker, index, id) => async (dispatch) => {
+// //   const path = `/${id}`;
+// //   const patched = await users.get(path).then((response) => {
+// //     const res = response;
+// //     res.data.watchlists[index].stocks.push(ticker);
+// //     return users.patch(path, {
+// //       ...res.data,
+// //     });
+// //   });
+
+// //   dispatch({
+// //     type: "ADD_STOCK_TO_WATCHLIST",
+// //     payload: patched.data,
+// //   });
+// //   return patched;
+// // };

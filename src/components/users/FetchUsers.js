@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchUser, createUser } from "../../actions";
-import history from "../../history";
 //Components
 import WatchlistShow from "../watchlists/WatchlistShow";
 import Homescreen from "../Homescreen";
 import ValidateUsers from "./ValidateUsers";
-import { test_userExists, test_createUser } from "../../actions/usersTest";
+import Spinner from "../loading animations/Spinner";
 
 class FetchUser extends Component {
   validateUser() {
@@ -33,7 +31,7 @@ class FetchUser extends Component {
       this.props.guestAuth.isGuestSignedIn ? (
       this.validateUser()
     ) : (
-      <div className="text-white text-xl">loading...</div>
+      <Spinner loadingDescription={"Logging User In"} />
     );
   }
 }
@@ -42,7 +40,6 @@ const mapStateToProps = (state) => {
   return {
     googleAuth: state.googleAuth,
     guestAuth: state.guestAuth,
-    userInfo: state.userInfo,
   };
 };
 

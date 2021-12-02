@@ -8,25 +8,19 @@ import LoadNewsButton from "../news/LoadNewsButton";
 import RenderStock from "../stocks/RenderStock";
 import WatchlistDelete from "./WatchlistDelete";
 import FirstWatchlist from "./FirstWatchlist";
+import Spinner from "../loading animations/Spinner";
 // Action Creators
+
 import {
-  deleteWatchlist,
   addStockToWatchlist,
   fetchUser,
+  deleteWatchlist,
+  getStockQuote,
 } from "../../actions/";
-
-import { test_fetchUser } from "../../actions/usersTest";
-
-import {
-  test_addStockToWatchList,
-  test_deleteWatchlist,
-} from "../../actions/usersTest";
-import { getStockQuote } from "../../actions/stocks";
 
 class WatchlistShow extends React.Component {
   componentDidMount() {
     this.props.fetchUser(this.props.id);
-    this.props.test_fetchUser(this.props.id);
   }
 
   state = {
@@ -46,30 +40,15 @@ class WatchlistShow extends React.Component {
   }
 
   onSubmit = (ticker, listId, OAuthId) => {
-    this.props.test_addStockToWatchList(ticker, listId, OAuthId);
-
-    // this.props.addStockToWatchlist(ticker, index, this.props.id);
+    this.props.addStockToWatchlist(ticker, listId, OAuthId);
   };
 
-  deleteWatchlist(index) {
-    // o authid, listId
-
-    this.props.test_deleteWatchlist(
-      this.props.test_currentUser.OAuthId,
-      "61a79c5f049635d1757bb259"
-    );
-
-    // removes deleted array from array of opened lists
-    // this.setState({
-    //   openLists: this.state.openLists.filter(
-    //     (list, listIndex) => listIndex != index - 1
-    //   ),
-    // });
+  deleteWatchlist(listId) {
+    this.props.deleteWatchlist(this.props.currentUser.OAuthId, listId);
   }
 
   // passes user.watchlist.stocks array to renderstocks components
   renderStocks(stocks, listId) {
-    console.log(listId);
     return stocks.map((stock, index) => {
       return (
         <RenderStock
@@ -88,22 +67,21 @@ class WatchlistShow extends React.Component {
     return watchlists.map((list, index) => {
       return (
         <React.Fragment>
-          <div className="relative flex flex-col justify-center items-center bg-secondary rounded-md mb-4 text-center w-96 md:w-1/2 lg:w-1/3 mx-auto">
+          <div className="relative flex flex-col justify-center items-center bg-secondary rounded-md mb-4 text-center w-96 md:w-3/4 lg:w-2/3 mx-auto">
             <div className="p-4">
               <div className="watchlist-header-container">
-                <h1 className="text-3xl font-bold mb-2">{list.title}</h1>
+                <h1 className="text-4xl font-bold mb-2">{list.title}</h1>
                 {list.description && (
-                  <h2 className="text-lg font-bold">{list.description}</h2>
+                  <h2 className="text-xl font-bold">{list.description}</h2>
                 )}
               </div>
               <WatchlistDelete
-                listIndex={index}
                 title={list.title}
-                onDelete={() => this.deleteWatchlist(index)}
+                onDelete={() => this.deleteWatchlist(list._id)}
               />
             </div>
 
-            <table className="table-auto ">
+            <table className="table-auto w-1/2">
               <thead>
                 <tr>
                   <th>Holding</th>
@@ -113,17 +91,17 @@ class WatchlistShow extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {/* {list.stocks && this.renderStocks(list.stocks, index)} */}
                 {list.stocks.length > 0 &&
                   this.renderStocks(list.stocks, list._id)}
               </tbody>
             </table>
-            <div className="flex flex-col py-6 px-4 w-full justify-center items-center">
+            <div className="flex flex-col py-6 px-4 w-full lg:w-1/2 justify-center items-center">
               {this.state.openLists.includes(index) ? (
                 <AddStockToWatchlist
                   onClick={this.onSubmit}
                   index={index}
                   form={"watchlist" + index}
+                  listId={list._id}
                 />
               ) : (
                 <button
@@ -144,16 +122,21 @@ class WatchlistShow extends React.Component {
   }
 
   render() {
-    return (
+    return !this.props.currentUser?.watchlists ? (
+      <React.Fragment>
+        <Spinner loadingDescription={"Loading Your Watchlist"} />
+      </React.Fragment>
+    ) : (
       <div className="w-full flex justify-center items-center lg:pt-20">
-        {this.props.test_currentUser &&
-        this.props.test_currentUser.watchlists.length === 0 ? (
+        {/* If user has no watchlists, load add watchlist component */}
+        {this.props.currentUser &&
+        this.props.currentUser.watchlists.length === 0 ? (
           <FirstWatchlist />
         ) : (
           <div className="w-full">
             :
-            {this.props.test_currentUser &&
-              this.renderList(this.props.test_currentUser.watchlists)}
+            {this.props.currentUser &&
+              this.renderList(this.props.currentUser.watchlists)}
             <Link to="/watchlist/create" className="utility-button w-full py-4">
               New watchlist
             </Link>
@@ -164,21 +147,9 @@ class WatchlistShow extends React.Component {
   }
 }
 
-// {/* If watchlists are loaded && user has not added watchlist, prompt to create */}
-// {this.props.watchlists && this.props.watchlists.length === 0 ? (
-//   <FirstWatchlist />
-// ) : (
-//   <div className="w-full">
-//     : {this.props.watchlists && this.renderList(this.props.watchlists)}
-//     <Link to="/watchlist/create" className="utility-button w-full py-4">
-//       New watchlist
-//     </Link>
-//   </div>
-// )}
 const mapStateToProps = (state) => {
   return {
-    test_currentUser: state.testAPI.currentUser,
-    watchlists: state.user.watchlists,
+    currentUser: state.users.currentUser,
   };
 };
 
@@ -186,8 +157,6 @@ export default connect(mapStateToProps, {
   fetchUser,
   deleteWatchlist,
   addStockToWatchlist,
+  deleteWatchlist,
   getStockQuote,
-  test_addStockToWatchList,
-  test_fetchUser,
-  test_deleteWatchlist,
 })(WatchlistShow);

@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 //Action Creators
-import { guestSignIn } from "../../actions/index";
+import { guestSignIn } from "../../actions";
 //Components
 import Modal from "../../Modal";
 import SignInButton from "./SignInButton";
 
-function SignInForm({ guestSignIn }) {
+function SignInForm({ guestSignIn, currentUser }) {
   const [selected, setSelected] = useState(false);
 
   // boolean that indicates if user login modal is displayed or not
@@ -54,4 +54,10 @@ function SignInForm({ guestSignIn }) {
   );
 }
 
-export default connect(null, { guestSignIn })(SignInForm);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.users.currentUser,
+  };
+};
+
+export default connect(mapStateToProps, { guestSignIn })(SignInForm);

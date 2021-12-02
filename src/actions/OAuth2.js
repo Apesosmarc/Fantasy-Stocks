@@ -1,5 +1,3 @@
-import users from "../apis/users";
-import _ from "lodash";
 import history from "../history";
 
 export const googleSignIn = (userId) => async (dispatch) => {

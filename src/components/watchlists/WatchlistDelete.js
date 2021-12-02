@@ -1,10 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Modal from "../../Modal";
-
 import { Link } from "react-router-dom";
 
-export default function WatchlistDelete({ index, title, onDelete }) {
+export default function WatchlistDelete({ listId, title, onDelete }) {
   const [selected, setSelected] = useState(false);
 
   const toggleSelected = () => {
@@ -16,7 +15,10 @@ export default function WatchlistDelete({ index, title, onDelete }) {
       <React.Fragment>
         <button
           className="utility-button px-4 py-2"
-          onClick={() => onDelete(index)}
+          onClick={() => {
+            onDelete(listId);
+            toggleSelected();
+          }}
         >
           Delete
         </button>
@@ -37,7 +39,7 @@ export default function WatchlistDelete({ index, title, onDelete }) {
   const renderModal = () => {
     return (
       <Modal
-        title={title}
+        title={"Delete Watchlist"}
         content={renderContent()}
         actions={renderActions()}
         onDismiss={() => toggleSelected()}

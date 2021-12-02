@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// ROUTER
-import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
+
 // ACTION CREATORS
-import { guestSignIn, guestSignOut } from "../../actions/guestAuth";
-import { googleSignIn, googleSignOut } from "../../actions/OAuth2";
-// import {
-//   googleSignIn,
-//   googleSignOut,
-//   signIn,
-//   signOut,
-// } from "../../actions/index";
-// icons
+import {
+  guestSignIn,
+  guestSignOut,
+  googleSignIn,
+  googleSignOut,
+} from "../../actions/";
+
 import { googleIcon } from "../../images/svgs/socialSVG";
+
+// === this component signs guest and googleAuth users in, also listens for Google OAuth2 Signout
 
 class SignInButton extends Component {
   componentDidMount() {
