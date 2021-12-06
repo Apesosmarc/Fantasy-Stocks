@@ -1,4 +1,4 @@
-const themeReducer = (state = {}, action) => {
+const ThemeReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_THEME":
       return { ...state, darkMode: action.payload };
@@ -11,4 +11,4 @@ const themeReducer = (state = {}, action) => {
   }
 };
 
-export default themeReducer;
+export default ThemeReducer;
