@@ -39,7 +39,6 @@ class WatchlistShow extends React.Component {
   }
 
   onSubmit = (ticker, listId, OAuthId) => {
-    console.log(listId, OAuthId);
     this.props.addStockToWatchlist(ticker, listId, OAuthId);
   };
 
