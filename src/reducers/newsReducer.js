@@ -1,4 +1,4 @@
-const newsReducer = (state = {}, action) => {
+const NewsReducer = (state = {}, action) => {
   switch (action.type) {
     case "GET_NEWS":
       return {
@@ -10,4 +10,4 @@ const newsReducer = (state = {}, action) => {
   }
 };
 
-export default newsReducer;
+export default NewsReducer;

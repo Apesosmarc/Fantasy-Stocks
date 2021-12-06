@@ -1,4 +1,4 @@
-const guestAuthReducer = (state = {}, action) => {
+const GuestAuthReducer = (state = {}, action) => {
   switch (action.type) {
     case "GUEST_SIGN_IN":
       return {
@@ -17,4 +17,4 @@ const guestAuthReducer = (state = {}, action) => {
   }
 };
 
-export default guestAuthReducer;
+export default GuestAuthReducer;

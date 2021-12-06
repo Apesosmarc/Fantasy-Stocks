@@ -1,4 +1,4 @@
-const googleAuthReducer = (state = {}, action) => {
+const GoogleAuthReducer = (state = {}, action) => {
   switch (action.type) {
     case "SIGN_IN":
       return {
@@ -13,4 +13,4 @@ const googleAuthReducer = (state = {}, action) => {
   }
 };
 
-export default googleAuthReducer;
+export default GoogleAuthReducer;
