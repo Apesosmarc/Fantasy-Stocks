@@ -9,13 +9,13 @@ import Spinner from "../loading animations/Spinner";
 class FetchUser extends Component {
   validateUser() {
     // If guest is signed in always redirect to guest login
-    if (this.props.guestAuth.isGuestSignedIn) {
-      return <WatchlistShow id="1" />;
+    if (this.props.guestAuth.isSignedIn) {
+      return <WatchlistShow id={4442} />;
     }
 
     // check if the user id entered into URL is googleAuthID
     const URL_ID = this.props.match.params.userId;
-    if (this.props.googleAuth.userId == URL_ID) {
+    if (this.props.googleAuth.userId === URL_ID) {
       // // checks if user exists in DB
       // return this.checkIfUserExists(URL_ID);
 
@@ -27,12 +27,16 @@ class FetchUser extends Component {
   }
 
   render() {
-    return this.props.googleAuth.isSignedIn ||
-      this.props.guestAuth.isGuestSignedIn ? (
-      this.validateUser()
-    ) : (
-      <Spinner loadingDescription={"Logging User In"} />
-    );
+    if (!this.props.googleAuth && !this.propsGuestAuth) {
+      return <Homescreen />;
+    } else {
+      return this.props.googleAuth.isSignedIn ||
+        this.props.guestAuth.isSignedIn ? (
+        this.validateUser()
+      ) : (
+        <Spinner loadingDescription={"Logging User In"} />
+      );
+    }
   }
 }
 

@@ -36,7 +36,7 @@ class AddStockToWatchlist extends React.Component {
     await iex
       .get(`/stock/${ticker}/quote`)
       .then((res) => {
-        this.props.onClick(ticker, this.props.listId, 4441);
+        this.props.onClick(ticker, this.props.listId, this.props.userId);
         reset();
       })
       .catch((error) => {
@@ -72,7 +72,6 @@ class AddStockToWatchlist extends React.Component {
 }
 
 const validate = (formValues) => {
-  console.log(formValues);
   const errors = {};
   if (!formValues.ticker) {
     errors.ticker = "Please enter a ticker";

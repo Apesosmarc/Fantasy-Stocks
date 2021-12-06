@@ -1,16 +1,30 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { useEffect } from "react";
 
 const Modal = (props) => {
+  // scrolls to top of page
+  window.scrollTo(0, 0);
+  // disables scrolling outside the VH of the modal comp
+  useEffect(() => {
+    const body = document.querySelector("body");
+
+    body.classList.add("overflow-y-hidden");
+
+    // cleanup function runs on last call
+    return () => body.classList.remove("overflow-y-hidden");
+  });
+
   return ReactDOM.createPortal(
     <div
       onClick={props.onDismiss}
-      className="absolute h-screen min-h-screen w-full bg-black bg-opacity-90 delete-modal flex justify-center items-center"
+      className="absolute w-full bg-black bg-opacity-90 delete-modal flex justify-center items-start lg:items-center"
+      style={{ height: "100vh" }}
     >
       <div
         // only clicking outside the form exits the modal
         onClick={(e) => e.stopPropagation()}
-        className=" p-5 bg-secondary delete-modal"
+        className="mt-48 md:mt-0 p-5 bg-secondary delete-modal"
       >
         {props.title ? (
           <React.Fragment>

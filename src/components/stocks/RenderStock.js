@@ -16,7 +16,7 @@ function RenderStock({
   useEffect(() => {
     // action creator
     getStockQuote(ticker, stockIndex);
-  }, []);
+  }, [getStockQuote, stockIndex, ticker]);
 
   const redOrGreenText = (price) => {
     if (parseInt(price) > 0) return "text-green";
@@ -64,7 +64,11 @@ function RenderStock({
           </td>
         </tr>
       ) : (
-        <div>loading...</div>
+        <tr>
+          <td>Loading...</td>
+          <td></td>
+          <td></td>
+        </tr>
       )}
     </React.Fragment>
   );

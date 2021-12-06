@@ -44,7 +44,7 @@ body {
 }
 
 .login-button {
-  @apply bg-transparent hover:bg-btnPrimary text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded;
+  @apply bg-btnPrimary hover:bg-transparent  font-semibold hover:text-blue-700 hover:border-blue-500 text-white py-4 px-6 border border-blue-500 hover:border-transparent rounded;
 }
 
 table {

@@ -1,6 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { connect } from "react-redux";
 //Action Creators
 import { guestSignIn } from "../../actions";
@@ -24,10 +23,7 @@ function SignInForm({ guestSignIn, currentUser }) {
   const renderActions = () => {
     return (
       <div className="flex flex-col gap-5 justify-center items-center">
-        <button
-          onClick={setGuestSignIn}
-          className="bg-transparent 0 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500  rounded"
-        >
+        <button onClick={setGuestSignIn} className="login-button">
           Login as Guest
         </button>
 

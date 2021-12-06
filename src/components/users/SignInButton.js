@@ -11,7 +11,7 @@ import {
 
 import { googleIcon } from "../../images/svgs/socialSVG";
 
-// === this component signs guest and googleAuth users in, also listens for Google OAuth2 Signout
+// === this component signs guest and googleAuth users in, also listens for Google OAuth2 Signout. ======
 
 class SignInButton extends Component {
   componentDidMount() {
@@ -50,7 +50,6 @@ class SignInButton extends Component {
     if (isSignedIn) {
       this.props.googleSignIn(this.auth.currentUser.get().getId());
     } else {
-      // this.props.signOut();
       this.props.googleSignOut();
     }
   };
@@ -65,14 +64,21 @@ class SignInButton extends Component {
     }
     return (
       <button onClick={this.onGoogleSignInClick} className="login-button flex">
-        <i className="mr-3">{googleIcon}</i> Sign In
+        <i className="mr-5">{googleIcon}</i> Sign In
       </button>
     );
   };
 
   renderGuestSignOutBtn = () => {
     return (
-      <button onClick={() => this.guestClickSignOut()} className="login-button">
+      <button
+        onClick={() => {
+          //prevents errors if user is already signed in on Google
+          if (this.props.googleAuth.isSignedIn) return;
+          this.guestClickSignOut();
+        }}
+        className="login-button"
+      >
         Sign Out
       </button>
     );
@@ -85,15 +91,12 @@ class SignInButton extends Component {
 
   renderAuthButton() {
     // specifies Guest user or google user
-    const userType = this.props.guestAuth.isGuestSignedIn
-      ? "guest"
-      : "googleUser";
+    const userType = this.props.guestAuth.isSignedIn ? "guest" : "googleUser";
 
+    //render guest/google user depending on userType
     return userType === "guest"
       ? this.renderGuestSignOutBtn()
       : this.renderGoogleSignOutBtn();
-
-    //if google user is signed in render sign in / sign out depending on status
   }
 
   render() {

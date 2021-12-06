@@ -1,19 +1,20 @@
-export default (state = {}, action) => {
+const guestAuthReducer = (state = {}, action) => {
   switch (action.type) {
     case "GUEST_SIGN_IN":
       return {
         ...state,
-        isSignedIn: false,
         userId: action.payload,
-        isGuestSignedIn: true,
+        isSignedIn: true,
       };
     case "GUEST_SIGN_OUT":
       return {
         ...state,
         userId: null,
-        isGuestSignedIn: false,
+        isSignedIn: false,
       };
     default:
       return state;
   }
 };
+
+export default guestAuthReducer;

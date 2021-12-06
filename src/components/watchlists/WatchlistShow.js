@@ -1,13 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import _ from "lodash";
 //Components
 import AddStockToWatchlist from "./AddStockToWatchlist";
 import LoadNewsButton from "../news/LoadNewsButton";
 import RenderStock from "../stocks/RenderStock";
 import WatchlistDelete from "./WatchlistDelete";
 import FirstWatchlist from "./FirstWatchlist";
+import Footer from "../footer/Footer";
 import Spinner from "../loading animations/Spinner";
 // Action Creators
 
@@ -40,6 +39,7 @@ class WatchlistShow extends React.Component {
   }
 
   onSubmit = (ticker, listId, OAuthId) => {
+    console.log(listId, OAuthId);
     this.props.addStockToWatchlist(ticker, listId, OAuthId);
   };
 
@@ -56,6 +56,7 @@ class WatchlistShow extends React.Component {
           stockIndex={index}
           listId={listId}
           OAuthId={this.props.id}
+          key={index}
         />
       );
     });
@@ -66,7 +67,7 @@ class WatchlistShow extends React.Component {
 
     return watchlists.map((list, index) => {
       return (
-        <React.Fragment>
+        <div key={list._id}>
           <div className="relative flex flex-col justify-center items-center bg-secondary rounded-md mb-4 text-center w-96 md:w-3/4 lg:w-2/3 mx-auto">
             <div className="p-4">
               <div className="watchlist-header-container">
@@ -99,7 +100,8 @@ class WatchlistShow extends React.Component {
               {this.state.openLists.includes(index) ? (
                 <AddStockToWatchlist
                   onClick={this.onSubmit}
-                  index={index}
+                  // index={index}
+                  userId={this.props.id}
                   form={"watchlist" + index}
                   listId={list._id}
                 />
@@ -114,9 +116,13 @@ class WatchlistShow extends React.Component {
             </div>
           </div>
           {list.stocks.length > 0 && (
-            <LoadNewsButton stocks={list.stocks} listIndex={index} />
+            <LoadNewsButton
+              stocks={list.stocks}
+              listIndex={index}
+              listId={list._id}
+            />
           )}
-        </React.Fragment>
+        </div>
       );
     });
   }
@@ -127,22 +133,22 @@ class WatchlistShow extends React.Component {
         <Spinner loadingDescription={"Loading Your Watchlist"} />
       </React.Fragment>
     ) : (
-      <div className="w-full flex justify-center items-center lg:pt-20">
-        {/* If user has no watchlists, load add watchlist component */}
-        {this.props.currentUser &&
-        this.props.currentUser.watchlists.length === 0 ? (
-          <FirstWatchlist />
-        ) : (
-          <div className="w-full">
-            :
-            {this.props.currentUser &&
-              this.renderList(this.props.currentUser.watchlists)}
-            <Link to="/watchlist/create" className="utility-button w-full py-4">
-              New watchlist
-            </Link>
-          </div>
-        )}
-      </div>
+      <React.Fragment>
+        <div className="w-full flex justify-center items-center lg:pt-20">
+          {/* If user has no watchlists, load add watchlist component */}
+          {this.props.currentUser &&
+          this.props.currentUser.watchlists.length === 0 ? (
+            <FirstWatchlist />
+          ) : (
+            <div className="w-full">
+              :
+              {this.props.currentUser &&
+                this.renderList(this.props.currentUser.watchlists)}
+            </div>
+          )}
+        </div>
+        <Footer />
+      </React.Fragment>
     );
   }
 }
@@ -157,6 +163,5 @@ export default connect(mapStateToProps, {
   fetchUser,
   deleteWatchlist,
   addStockToWatchlist,
-  deleteWatchlist,
   getStockQuote,
 })(WatchlistShow);

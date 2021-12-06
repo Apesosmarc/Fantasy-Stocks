@@ -10,13 +10,10 @@ class LoadNewsButton extends Component {
   };
 
   componentDidMount() {
-    if (this.props.stocks.length != 0) {
-      this.props.stocks.forEach((stock, index) => {
-        this.props.getNews(stock, index);
-      });
-    }
+    this.props.getNews(this.props.stocks, this.props.listId);
   }
 
+  //toggles news button
   toggleNews = () => {
     this.setState({
       toggleNews: !this.state.toggleNews,
@@ -25,10 +22,14 @@ class LoadNewsButton extends Component {
 
   shuffleNews = (arr) => arr.sort(() => Math.random() - 0.5);
 
-  renderNewsFeed(news) {
-    return news.map((article) => {
+  renderNewsFeed = (news) => {
+    news = this.shuffleNews(news.slice(0, 7));
+    return news.map((article, index) => {
       return (
-        <article className="grid grid-cols-1 md:grid-cols-2 w-10/12 lg:w-9/12 mt-2 mb-5 gap-4 lg:gap-8 max-w-sm md:max-w-none mx-auto ">
+        <article
+          key={index}
+          className="grid grid-cols-1 md:grid-cols-2 w-10/12 lg:w-9/12 mt-2 mb-5 gap-4 lg:gap-8 max-w-sm md:max-w-none mx-auto "
+        >
           <div
             className="h-52 max-w-10 w-full md:w-11/12 lg:w-9/12 bg-contain bg-no-repeat col-start-1 justify-self-end"
             style={{
@@ -49,7 +50,7 @@ class LoadNewsButton extends Component {
         </article>
       );
     });
-  }
+  };
 
   render() {
     return (
@@ -64,13 +65,15 @@ class LoadNewsButton extends Component {
             onClick={this.toggleNews}
             className="w-full h-full p-4 relative"
           >
-            <span className="text-2xl ">Show News</span>
+            <span className="text-2xl ">
+              {this.state.toggleNews === true ? "Hide News" : "Show News"}
+            </span>
           </button>
         </div>
         <div className="w-full mx-auto lg:w-8/12 flex flex-col justify-center">
           {this.props.news &&
             this.state.toggleNews &&
-            this.renderNewsFeed(this.shuffleNews(this.props.news))}
+            this.renderNewsFeed(this.props.news[this.props.listId])}
           {this.state.toggleNews && (
             <button
               className="mx-auto utility-button py-2 px-4"
@@ -86,13 +89,8 @@ class LoadNewsButton extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const newsArr = [];
-  for (let stock in state.news) {
-    state.news[stock].forEach((article) => newsArr.push(article));
-  }
-
   return {
-    news: newsArr,
+    news: state.news,
   };
 };
 

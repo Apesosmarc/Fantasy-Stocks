@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 // ROUTER
-import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
 import history from "../history";
 // ACTION CREATORS
 // import { createUser } from "../actions/usersTest";
@@ -14,17 +14,16 @@ import SignInButton from "./users/SignInButton";
 import Header from "../components/header/Header";
 
 class App extends React.Component {
-  componentDidMount() {
-    // this.props.createUser();
-  }
-
+  checkIfSignedIn = () => {
+    return this.props.googleAuth || this.props.guestAuth ? true : false;
+  };
   render() {
     return (
       <div>
         <Router history={history}>
           <BackgroundImage />
 
-          <div className="container mx-auto">
+          <div className="container mx-auto pb-12">
             <Header />
 
             <Switch>
@@ -32,6 +31,8 @@ class App extends React.Component {
               <Route path="/watchlist/create" exact component={NewWatchlist} />
               <Route component={FetchUsers} path="/:userId" />
             </Switch>
+          </div>
+          <div className="hidden">
             <SignInButton />
           </div>
         </Router>
@@ -41,8 +42,9 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  // PASS USER ID HERE
+  return {
+    googleAuth: state.googleAuth.isSignedIn,
+    guestAuth: state.guestAuth.isSignedIn,
+  };
 };
-export default connect(mapStateToProps, {
-  // createUser,
-})(App);
+export default connect(mapStateToProps, null)(App);

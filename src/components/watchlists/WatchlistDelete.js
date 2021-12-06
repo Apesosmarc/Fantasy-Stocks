@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import Modal from "../../Modal";
-import { Link } from "react-router-dom";
 
 export default function WatchlistDelete({ listId, title, onDelete }) {
   const [selected, setSelected] = useState(false);
@@ -26,7 +25,7 @@ export default function WatchlistDelete({ listId, title, onDelete }) {
           className="utility-button px-4 py-2"
           onClick={() => toggleSelected()}
         >
-          <Link to="/">Cancel</Link>
+          Cancel
         </button>
       </React.Fragment>
     );
@@ -36,6 +35,11 @@ export default function WatchlistDelete({ listId, title, onDelete }) {
     return `Are you sure you want to delete watchlist: ${title}?`;
   };
 
+  const disableScroll = () => {
+    console.log("fired");
+    window.scrollTo(0, 0);
+  };
+
   const renderModal = () => {
     return (
       <Modal
@@ -43,6 +47,7 @@ export default function WatchlistDelete({ listId, title, onDelete }) {
         content={renderContent()}
         actions={renderActions()}
         onDismiss={() => toggleSelected()}
+        disable={() => disableScroll()}
       />
     );
   };
