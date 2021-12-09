@@ -71,6 +71,7 @@ class WatchlistShow extends React.Component {
             <div className="p-4">
               <div className="watchlist-header-container">
                 <h1 className="text-4xl font-bold mb-2">{list.title}</h1>
+                {/* conditional render description */}
                 {list.description && (
                   <h2 className="text-xl font-bold">{list.description}</h2>
                 )}
