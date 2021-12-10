@@ -18,13 +18,33 @@ function RenderStock({
     getStockQuote(ticker, stockIndex);
   }, []);
 
-  const redOrGreenText = (price) => {
-    if (parseInt(price) > 0) return "text-green";
-    return "text-red";
+  const priceDirection = {
+    isPositive: function () {
+      if (parseInt(this.dailyChangePercent) > 0) return true;
+      return false;
+    },
+    // returns style based on price
+    greenOrRed: function () {
+      return this.isPositive(this.dailyChangePercent)
+        ? "text-green-500"
+        : "text-red-500";
+    },
+    // adds + symbol to green day price change
+    // negative dailyChangePercent already has '-' before number
+    plusOrMinus: function () {
+      return this.isPositive(this.dailyChangePercent)
+        ? `+${this.dailyChangePercent}`
+        : `${this.dailyChangePercent}`;
+    },
   };
 
-  // if received props, check if market is closed used last close price, else use currentPrice
+  // if received props...
   if (stockQuote[stockIndex]) {
+    // shortens varName on price obj
+    priceDirection.dailyChangePercent = stockQuote[stockIndex].changePercent;
+    priceDirection.price = stockQuote[stockIndex].currentPrice;
+
+    // if market is close, the currentPrice becomes the price the stock closed at
     if (stockQuote[stockIndex].latestSource === "Close") {
       stockQuote[stockIndex].currentPrice =
         stockQuote[stockIndex].previousClose;
@@ -39,17 +59,13 @@ function RenderStock({
           <td
             className={
               // concats 'text-red'||'text-green' + '-500'
-              redOrGreenText(stockQuote[stockIndex].changePercent) + "-500"
+              priceDirection.greenOrRed()
             }
           >
-            ${stockQuote[stockIndex].currentPrice}
+            ${priceDirection.price}
           </td>
-          <td
-            className={
-              redOrGreenText(stockQuote[stockIndex].changePercent) + "-500"
-            }
-          >
-            {stockQuote[stockIndex].changePercent}
+          <td className={priceDirection.greenOrRed()}>
+            {priceDirection.plusOrMinus()}
           </td>
 
           <td>
