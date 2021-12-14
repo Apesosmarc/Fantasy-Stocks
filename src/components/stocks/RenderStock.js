@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 // Action Creators
 import { getStockQuote, deleteStockFromWatchlist } from "../../actions";
@@ -13,10 +13,23 @@ function RenderStock({
   OAuthId,
   deleteStockFromWatchlist,
 }) {
+  const [quote, setQuote] = useState(null);
+
+  //wrapped in useCallback because of exhaustive dep.
+  // this should only be called once, rather than if dependencies change
+  const getQuoteOnLoad = useCallback(() => {
+    const response = getStockQuote(ticker, stockIndex);
+    setQuote(response);
+  }, [getStockQuote, stockIndex, ticker]);
+
   useEffect(() => {
-    // action creator
-    getStockQuote(ticker, stockIndex);
-  }, []);
+    // if response received return
+    if (quote !== null) {
+      return;
+    }
+
+    getQuoteOnLoad();
+  }, [getQuoteOnLoad, quote]);
 
   const priceDirection = {
     isPositive: function () {

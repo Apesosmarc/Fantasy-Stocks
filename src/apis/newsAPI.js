@@ -1,9 +1,8 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://newsapi.org/v2/everything",
+  baseURL: "https://gnews.io/api/v4/search",
   params: {
-    sortBy: "popularity",
-    apiKey: "5657f7cd3ae944c487afd9146324277f",
+    token: "fc1a2a5130b8c53d901ee98ebbc1466c",
   },
 });

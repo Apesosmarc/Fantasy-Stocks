@@ -33,7 +33,7 @@ class LoadNewsButton extends Component {
           <div
             className="h-52 max-w-10 w-full md:w-11/12 lg:w-9/12 bg-contain bg-no-repeat col-start-1 justify-self-end"
             style={{
-              backgroundImage: `url(${article.urlToImage})`,
+              backgroundImage: `url(${article.image})`,
             }}
           ></div>
 
@@ -79,7 +79,7 @@ class LoadNewsButton extends Component {
               className="mx-auto utility-button py-2 px-4"
               onClick={this.toggleNews}
             >
-              Hide
+              Hide News
             </button>
           )}
         </div>
