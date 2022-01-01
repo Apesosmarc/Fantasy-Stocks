@@ -1,5 +1,5 @@
 # StonkWatch
-<p align="center"><img src="https://raw.githubusercontent.com/Apesosmarc/StonkWatch/blob/main/github_assets/mobile_ss.jpg"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Apesosmarc/StonkWatch/fc2e4133aff003dd3185adb413e75ea77c20fd73/github_assets/mobile_ss.jpg"></p>
 
 
 [Back End](https://github.com/Apesosmarc/StonkWatch-API-Server)
