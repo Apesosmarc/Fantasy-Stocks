@@ -1,4 +1,16 @@
-# IN DEVELOPMENT
+# Overview
+Users can create watchlists and get real time stock data fetched from IEX API. This app saves info based on the user
+logged in and fetches the latest news for each stock in the user's watchlist for a custom news feed based on the holdings the user adds.
+
+This front end receives data from multiple API's and stores them in an app level
+state that can be accessed by any nested component using Redux. Users can create an account authorized by the Google OAuth API, or log in with a guest account.
+
+Using Redux Forms, I validate inputs on the front end to accept only ticker letter formats and to validate the existance of the company via IEX.
+Installed is the Redux Thunk middleware which lets make async requests in action creators before dispatching desired data to the Redux store.
+
+Dark/light mode button changes app theme and user preference gets stored to localStorage. Elements with lengthy styling assigned styles using 
+tailwind CSS utility classes to limit Tailwind markup styles. React modals get called for google login screen and delete prompts.
+
 
 Stack:
 JS
@@ -7,6 +19,8 @@ Redux
 Redux forms
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
 
 ## Available Scripts
 
