@@ -1,6 +1,5 @@
 # StonkWatch
-(https://github.com/[Apesosmarc]/[StonkWatch]/blob/main/github_assets/lightMode_ss.jpg)
-<p align="center"><img src="https://raw.githubusercontent.com/Apesosmarc/StonkWatch/blob/main/github_assets/lightMode_ss.jpg"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Apesosmarc/StonkWatch/blob/main/github_assets/mobile_ss.jpg"></p>
 
 
 [Back End](https://github.com/Apesosmarc/StonkWatch-API-Server)
