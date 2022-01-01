@@ -32,13 +32,22 @@ class SignInButton extends Component {
             this.onAuthChange(this.auth.isSignedIn.get());
 
             this.auth.isSignedIn.listen(this.onAuthChange);
+          })
+          .catch((error) => {
+            console.log(
+              "This domain is not authorized to access Google OAuth API, please sign in as guest."
+            );
           });
       });
     }
   }
 
   onGoogleSignInClick = () => {
-    this.auth.signIn();
+    try {
+      this.auth.signIn();
+    } catch {
+      console.log("Google OAuth API is not working");
+    }
   };
 
   onGoogleSignOutClick = () => {

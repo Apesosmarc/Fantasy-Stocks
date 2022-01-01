@@ -20,7 +20,9 @@ class WatchlistForm extends React.Component {
           {...input}
           autoComplete="off"
         />
-        {meta.touched && meta.error && <div>{meta.error}</div>}
+        {meta.touched && meta.error && (
+          <div className="text-red-500">{meta.error}</div>
+        )}
       </div>
     );
   };
@@ -42,9 +44,7 @@ class WatchlistForm extends React.Component {
           placeholder="Optional"
           component={this.renderInput}
         />
-        <button className="bg-btnPrimary text-2xl hover:bg-blue-700 text-white py-2 px-4 font-bold rounded self-center flex-grow-0 mt-4">
-          Submit
-        </button>
+        <button className="submit-btn">Submit</button>
       </form>
     );
   }

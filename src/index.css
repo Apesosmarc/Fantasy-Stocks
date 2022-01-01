@@ -87,6 +87,29 @@ tr:last-of-type {
 
 /* LANDING PAGE FEATURES  */
 
+/* LANDINGPAGE FONTS --- */
+
+.landingpage-header {
+  @apply text-xl capitalize mb-10 tracking-wider;
+}
+
+.landingpage-header2 {
+  @apply text-xl capitalize mb-10 tracking-wider;
+}
+/* ---> */
+
+.landingpage-main {
+  @apply bg-secondary rounded-md px-5;
+}
+
+.landingpage-hero {
+  @apply py-20 flex justify-center flex-col items-center;
+}
+
+.features-section {
+  @apply py-10 rounded-md flex lg:flex-row flex-col  items-center text-center;
+}
+
 .features-card {
   @apply flex flex-col items-center justify-center;
 }
@@ -101,6 +124,20 @@ tr:last-of-type {
 
 .features-body {
   @apply leading-6 mt-2;
+}
+
+/* WATCHLISTS STYLING */
+
+.addwatchlist-btn {
+  @apply bg-secondary border border-dotted border-primary h-96 px-12 w-96 flex flex-col justify-center items-center;
+}
+
+.add-to-list-btn {
+  @apply ml-2 bg-btnPrimary utility-button py-2 px-4 flex-grow-0;
+}
+
+.submit-btn {
+  @apply bg-btnPrimary text-2xl hover:bg-blue-700 text-white py-2 px-4 font-bold rounded self-center flex-grow-0 mt-4;
 }
 
 @tailwind base;

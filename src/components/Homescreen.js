@@ -32,20 +32,20 @@ class Homescreen extends React.Component {
 
   render() {
     return (
-      <main className="bg-secondary rounded-md px-5">
-        <section className="py-20 flex justify-center flex-col items-center">
-          <h1 className="text-3xl capitalize tracking-wider mb-10 ">
+      <main className="landingpage-main">
+        <section className="landingpage-hero">
+          <h1 className="landingpage-header text-3xl capitalize tracking-wider mb-10 ">
             all the market info you need at a glance
           </h1>
 
-          <h2 className="text-xl capitalize mb-10 tracking-wider">
+          <h2 className="landingpage-header2 ">
             Real time stock quotes & news tailored to your holdings
           </h2>
 
           {this.checkIfLoggedIn()}
         </section>
 
-        <section className="py-10 rounded-md flex lg:flex-row flex-col  items-center text-center">
+        <section className="features-section">
           <div className="features-card">
             {dataSVG}
             <div className="features-copy">

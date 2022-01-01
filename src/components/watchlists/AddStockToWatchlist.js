@@ -62,9 +62,7 @@ class AddStockToWatchlist extends React.Component {
             component={this.renderInput}
           />
 
-          <button className=" ml-2 bg-btnPrimary utility-button py-2 px-4 flex-grow-0">
-            Add To List
-          </button>
+          <button className="add-to-list-btn">Add To List</button>
         </form>
       </div>
     );
