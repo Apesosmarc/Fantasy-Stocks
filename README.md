@@ -1,8 +1,7 @@
 # StonkWatch
 <p align="center"><img src="https://raw.githubusercontent.com/Apesosmarc/StonkWatch/main/github_assets/stonkwatch_landingpage.jpg"></p>
 
-
-[Back End](https://github.com/Apesosmarc/StonkWatch-API-Server)
+### [Back End](https://github.com/Apesosmarc/StonkWatch-API-Server)
 
 ## Overview
 CRUD app where user can login with Google OAuth2 and create watchlists to get real time stock data fetched from IEX API. This app dynamically loads current news based on the user's holdings
