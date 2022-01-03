@@ -2,6 +2,7 @@
 <p align="center"><img src="https://raw.githubusercontent.com/Apesosmarc/StonkWatch/main/github_assets/stonkwatch_landingpage.jpg"></p>
 
 ### [Back End Repo](https://github.com/Apesosmarc/StonkWatch-API-Server)
+### [Live Site](https://stonkwatch.herokuapp.com/)
 
 ## Overview
 CRUD app where user can login with Google OAuth2 and create watchlists to get real time stock data fetched from IEX API. This app dynamically loads current news based on the user's holdings
