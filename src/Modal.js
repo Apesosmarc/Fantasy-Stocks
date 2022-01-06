@@ -18,7 +18,7 @@ const Modal = (props) => {
   return ReactDOM.createPortal(
     <div
       onClick={props.onDismiss}
-      className="absolute w-full bg-black bg-opacity-90 delete-modal flex justify-center items-start lg:items-center"
+      className="absolute w-full bg-black bg-opacity-90 delete-modal flex justify-center items-start md:items-center lg:items-center"
       style={{ height: "100vh" }}
     >
       <div

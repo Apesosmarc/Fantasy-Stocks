@@ -23,7 +23,14 @@ class LoadNewsButton extends Component {
   shuffleNews = (arr) => arr.sort(() => Math.random() - 0.5);
 
   renderNewsFeed = (news) => {
-    console.log(news);
+    if (news.length < 1)
+      return (
+        <div>
+          <p className="text-red-500">
+            Error 429: Too Many Requests To My Free API. Please Be Gentle
+          </p>
+        </div>
+      );
     news = this.shuffleNews(news.slice(0, 7));
     return news.map((article, index) => {
       return (
