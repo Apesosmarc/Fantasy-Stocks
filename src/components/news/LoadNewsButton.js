@@ -25,8 +25,8 @@ class LoadNewsButton extends Component {
   renderNewsFeed = (news) => {
     if (news.length < 1)
       return (
-        <div>
-          <p className="text-red-500">
+        <div className="w-full">
+          <p className="text-red-500 mx-auto">
             Error 429: Too Many Requests To My Free API. Please Be Gentle
           </p>
         </div>
