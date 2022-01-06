@@ -23,6 +23,7 @@ class LoadNewsButton extends Component {
   shuffleNews = (arr) => arr.sort(() => Math.random() - 0.5);
 
   renderNewsFeed = (news) => {
+    console.log(news);
     news = this.shuffleNews(news.slice(0, 7));
     return news.map((article, index) => {
       return (
