@@ -15,10 +15,9 @@ export const getNews = (stocks, listId) => async (dispatch) => {
         .then((res) => {
           newsArr.push(...res.data.articles.slice(0, 3));
           return res.data.articles.slice(0, 3);
-        })
-        .catch((e) => console.log(e));
+        });
     })
-  );
+  ).catch((e) => console.log(e));
 
   // assigns each array of articles to key of listId. This can be accessed easily within ShowNews component
   dispatch({
